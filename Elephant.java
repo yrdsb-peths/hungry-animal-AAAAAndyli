@@ -2,8 +2,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class Elephant extends Actor
 {
+    int x = 0;
+    int y = 0;
+    int jumpHeight = 0;
     public void act()
     {
+        x = getX();
+        y = getY();
         if(Greenfoot.isKeyDown("left"))
         {
             move(-5);
@@ -12,7 +17,26 @@ public class Elephant extends Actor
         {
             move(5);
         }
-        
+        if(Greenfoot.isKeyDown("up"))
+        {
+            jump();
+        }
+        setLocation(x, y+jumpHeight);
+        if(jumpHeight == 0)
+        {
+            if(y<300)
+            {
+                jumpHeight += 5;
+            }
+        }
+        else if(jumpHeight < 0)
+        {
+            jumpHeight += 1;
+        }
+        else if(jumpHeight > 0)
+        {
+            jumpHeight -= 1;
+        }
         eat();
     }
     public void eat()
@@ -24,5 +48,9 @@ public class Elephant extends Actor
             world.createApple();
             world.increaseScore();
         }
+    }
+    public void jump()
+    {
+        jumpHeight = -5;
     }
 }
