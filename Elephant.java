@@ -9,19 +9,43 @@ public class Elephant extends Actor
     int gravityModifier = 0;
     boolean isGrounded = true;
     boolean peakJump = false;
+    GreenfootSound elephantSound = new GreenfootSound("elephantcub.mp3");
+    GreenfootImage[] idleRight = new GreenfootImage[8];
+    GreenfootImage[] idleLeft = new GreenfootImage[8];
+    
+    //direction elephant is facing
+    String facing = "right";
+    
+    public Elephant()
+    {
+        for(int i = 0; i < 8; i++)
+        {
+            idleRight[i] = new GreenfootImage("images/elephant_idle/idle" + i + ".png");
+            idleRight[i].scale(75,75);
+        }
+        for(int i = 0; i < 8; i++)
+        {
+            idleLeft[i] = new GreenfootImage("images/elephant_idle/idle" + i + ".png");
+            idleLeft[i].mirrorHorizontally();
+            idleLeft[i].scale(75,75);
+        }
+        setImage(idleRight[0]);
+    }
+    
+    
     public void act()
     {
-        GreenfootSound elephantSound = new GreenfootSound("elephantcub.mp3");
-        
         x = getX();
         y = getY();
         if(Greenfoot.isKeyDown("left"))
         {
             hMovement = -5;
+            facing = "left";
         }
         if(Greenfoot.isKeyDown("right"))
         {
             hMovement = 5;
+            facing = "right";
         }
         if(Greenfoot.isKeyDown("up"))
         {
@@ -58,6 +82,7 @@ public class Elephant extends Actor
         }
         hMovement = 0;
         eat();
+        animateElephant();
     }
     public void eat()
     {
@@ -81,6 +106,21 @@ public class Elephant extends Actor
         {
             jumpHeight = 6;
             peakJump = true;
+        }
+    }
+    
+    int imageIndex = 0;
+    public void animateElephant()
+    {
+        if(facing.equals("right"))
+        {
+            setImage(idleRight[imageIndex]);
+            imageIndex = (imageIndex + 1) % idleRight.length;
+        }
+        else
+        {
+            setImage(idleLeft[imageIndex]);
+            imageIndex = (imageIndex + 1) % idleLeft.length;
         }
     }
 }
