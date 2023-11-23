@@ -4,39 +4,57 @@ public class Elephant extends Actor
 {
     int x = 0;
     int y = 0;
+    int hMovement = 0;
     int jumpHeight = 0;
+    int gravityModifier = 0;
+    boolean isGrounded = true;
+    boolean peakJump = false;
     public void act()
     {
         x = getX();
         y = getY();
         if(Greenfoot.isKeyDown("left"))
         {
-            move(-5);
+            hMovement = -5;
         }
-        else if(Greenfoot.isKeyDown("right"))
+        if(Greenfoot.isKeyDown("right"))
         {
-            move(5);
+            hMovement = 5;
         }
         if(Greenfoot.isKeyDown("up"))
         {
+            isGrounded = false;
             jump();
+            gravityModifier--;
         }
-        setLocation(x, y+jumpHeight);
-        if(jumpHeight == 0)
+        //jump code
+        if((peakJump==true&&isGrounded == false))
         {
-            if(y<300)
+            gravityModifier++;
+        }
+        setLocation(x+hMovement, y+jumpHeight);
+        if(y< 300)
+        {
+            if(!Greenfoot.isKeyDown("up"))
             {
-                jumpHeight += 5;
+                if(peakJump == false)
+                {
+                    gravityModifier = 0;
+                }
+                jumpHeight += 10;
+                peakJump = true;
+                jumpHeight += gravityModifier;
             }
         }
-        else if(jumpHeight < 0)
+        if(getY() > 300)
         {
-            jumpHeight += 1;
+            gravityModifier =0;
+            jumpHeight = 0;
+            setLocation(x, 300);
+            isGrounded = true;
+            peakJump = false;
         }
-        else if(jumpHeight > 0)
-        {
-            jumpHeight -= 1;
-        }
+        hMovement = 0;
         eat();
     }
     public void eat()
@@ -51,6 +69,15 @@ public class Elephant extends Actor
     }
     public void jump()
     {
-        jumpHeight = -5;
+        if(peakJump == false)
+        {
+            jumpHeight = -12;
+            jumpHeight -= gravityModifier;
+        }
+        if(getY() < 200&&isGrounded == false)
+        {
+            jumpHeight = 12;
+            peakJump = true;
+        }
     }
 }
