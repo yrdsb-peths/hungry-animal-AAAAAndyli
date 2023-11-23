@@ -11,6 +11,8 @@ public class Elephant extends Actor
     boolean peakJump = false;
     public void act()
     {
+        GreenfootSound elephantSound = new GreenfootSound("elephantcub.mp3");
+        
         x = getX();
         y = getY();
         if(Greenfoot.isKeyDown("left"))
@@ -41,7 +43,7 @@ public class Elephant extends Actor
                 {
                     gravityModifier = 0;
                 }
-                jumpHeight += 10;
+                jumpHeight = 6;
                 peakJump = true;
                 jumpHeight += gravityModifier;
             }
@@ -65,6 +67,7 @@ public class Elephant extends Actor
             MyWorld world = (MyWorld) getWorld();
             world.createApple();
             world.increaseScore();
+            elephantSound.play();
         }
     }
     public void jump()
@@ -76,7 +79,7 @@ public class Elephant extends Actor
         }
         if(getY() < 200&&isGrounded == false)
         {
-            jumpHeight = 12;
+            jumpHeight = 6;
             peakJump = true;
         }
     }
