@@ -24,23 +24,25 @@ public class EnemyH extends Actor
     public void act()
     {
         MyWorld world = (MyWorld) getWorld();        
-        if(getY() > 600 || getY() < 0)
-        {
-            world.removeObject(this);
-        }
         if(direction == 0)
         {
             setImage(crocR);
-            move(world.score/10+1);
+            move(world.highestScore/5+1);
         }
         else
         {
             setImage(crocL);
-            move(-1*world.score/10-1);
+            move(-1*world.highestScore/5-1);
         }
         if(isTouching(Elephant.class))
         {
+            world.score -= 5;
             world.gameOver();
+            move(5000);
+        }
+        if(getX() > 600 || getX() < 0)
+        {
+            world.removeObject(this);
         }
     }
 }

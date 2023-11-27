@@ -14,10 +14,12 @@ public class MyWorld extends World
      * 
      */
     public int score = 0;
+    public int highestScore = score;
     Label scoreLabel;
     SimpleTimer enemyTimer = new SimpleTimer();
     boolean gameOver = false;
-    
+    boolean warningOnScreen = false;
+    int dir = 0;
     public MyWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
@@ -35,18 +37,26 @@ public class MyWorld extends World
     
     public void act()
     {
-        if(enemyTimer.millisElapsed() > 10000-10*score&&!gameOver)
-        {
+        if(enemyTimer.millisElapsed() > 5000-10*highestScore&&!gameOver)
+        {            
             createEnemyH();
-            enemyTimer.mark();
+        }
+        if(highestScore < score)
+        {
+            highestScore = score;
         }
     }
     
     public void gameOver()
     {
-        Label gameOverLabel = new Label ("Game Over", 100);
-        addObject(gameOverLabel, 300, 200);
-        gameOver = true;
+        scoreLabel.setValue(score);
+        if(score < 0)
+        {
+            scoreLabel.setValue(0);
+            Label gameOverLabel = new Label ("Game Over", 100);
+            addObject(gameOverLabel, 300, 200);
+            gameOver = true;
+        }
     }
     
     public void increaseScore()
@@ -64,15 +74,34 @@ public class MyWorld extends World
     
     public void createEnemyH()
     {
-        int x = Greenfoot.getRandomNumber(2);
-        EnemyH croc = new EnemyH(x);
-        if(x == 0)
+        Warning warning = new Warning();
+        if(!warningOnScreen)
         {
-            addObject(croc, 0, 330);
+            enemyTimer.mark();
+            dir = Greenfoot.getRandomNumber(2);
+        }
+        EnemyH croc = new EnemyH(dir);
+        if(dir == 0)
+        {
+            addObject(warning, 20, 200);
+            warningOnScreen = true;
+            if(enemyTimer.millisElapsed() > 1000-highestScore*10)
+            {
+                warningOnScreen = false;
+                addObject(croc, 0, 330);
+                enemyTimer.mark();
+            }
         }
         else
         {
-            addObject(croc, 600, 330);
+            addObject(warning, 580, 200);
+            warningOnScreen = true;
+            if(enemyTimer.millisElapsed() > 1000-highestScore*10)
+            {
+                warningOnScreen = false;
+                addObject(croc, 600, 330);
+                enemyTimer.mark();
+            }
         }
     }
 }
