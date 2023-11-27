@@ -19,7 +19,7 @@ public class Apple extends Actor
         int y = getY()+speed;
         setLocation(x,y);
         MyWorld world = (MyWorld) getWorld();
-        speed = world.score/10;
+        speed = world.score/10+1;
         if(getY() >= world.getHeight())
         {
             world.score -= 5;
