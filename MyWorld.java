@@ -45,8 +45,21 @@ public class MyWorld extends World
     public void createApple()
     {
         Apple apple = new Apple();
-        apple.speed++;
         int x = Greenfoot.getRandomNumber(600);
         addObject(apple, x, 0);
+    }
+    
+    public void createEnemyH()
+    {
+        int x = Greenfoot.getRandomNumber(2);
+        EnemyH croc = new EnemyH(x);
+        if(x == 0)
+        {
+            addObject(croc, 0, 0);
+        }
+        else
+        {
+            addObject(croc, 0, 600);
+        }
     }
 }
