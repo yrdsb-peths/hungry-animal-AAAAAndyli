@@ -4,9 +4,10 @@ public class Elephant extends Actor
 {
     int x = 0;
     int y = 0;
-    int hMovement = 0;
+    double hMovement = 0;
     int jumpHeight = 0;
-    int gravityModifier = 0;
+    double gravityModifier = 0;
+    int dashable = 0;
     boolean isGrounded = true;
     boolean peakJump = false;
     GreenfootSound elephantSound = new GreenfootSound("elephantcub.mp3");
@@ -39,49 +40,63 @@ public class Elephant extends Actor
         y = getY();
         if(Greenfoot.isKeyDown("left"))
         {
-            hMovement = -5;
+            hMovement -= 1.2;
             facing = "left";
         }
         if(Greenfoot.isKeyDown("right"))
         {
-            hMovement = 5;
+            hMovement += 1.2;
             facing = "right";
         }
         if(Greenfoot.isKeyDown("up"))
         {
             isGrounded = false;
             jump();
-            gravityModifier--;
+            gravityModifier-=0.5;
         }
         //jump code
         if((peakJump==true&&isGrounded == false))
         {
-            gravityModifier++;
+            gravityModifier+=0.9;
         }
-        setLocation(x+hMovement, y+jumpHeight);
+        
+        if(Greenfoot.isKeyDown("space"))
+        {
+            dash();
+        }
+        setLocation(x+(int)hMovement, y+jumpHeight);
         if(y< 300)
         {
             if(!Greenfoot.isKeyDown("up"))
             {
-                if(peakJump == false)
-                {
-                    gravityModifier = 0;
-                }
-                jumpHeight = 6;
+                peakJump = true;
+                jumpHeight += gravityModifier;
+            }
+            if(peakJump)
+            {
+                jumpHeight = 0;
                 peakJump = true;
                 jumpHeight += gravityModifier;
             }
         }
         if(getY() > 300)
         {
-            gravityModifier =0;
+            gravityModifier = 0;
             jumpHeight = 0;
             setLocation(x, 300);
             isGrounded = true;
             peakJump = false;
         }
-        hMovement = 0;
+        if(hMovement < 0)
+        {
+            hMovement++;
+        }
+        else if (hMovement > 0)
+        {
+            hMovement--;
+        }
         eat();
+        dashable++;
         animateElephant();
     }
     public void eat()
@@ -99,13 +114,31 @@ public class Elephant extends Actor
     {
         if(peakJump == false)
         {
-            jumpHeight = -12;
+            jumpHeight = -16;
             jumpHeight -= gravityModifier;
         }
         if(getY() < 200&&isGrounded == false)
         {
-            jumpHeight = 6;
             peakJump = true;
+        }
+    }
+    
+    public void dash()
+    {
+        if(dashable > 100)
+        {
+            jumpHeight = 0;
+            gravityModifier = 0;
+            peakJump = true;
+            if(facing == "left")
+            {
+                hMovement = -20;
+            }
+            else
+            {
+                hMovement = 20;
+            }
+            dashable = 0;
         }
     }
     
