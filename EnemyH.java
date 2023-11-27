@@ -1,7 +1,8 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class EnemyH here.
+ * Simple enemy that spawns randomly, damages player if touching player
+ * and moves from one side of the screen to the other
  * 
  * @author (your name) 
  * @version (a version number or a date)
