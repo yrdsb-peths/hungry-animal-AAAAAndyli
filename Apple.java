@@ -18,12 +18,17 @@ public class Apple extends Actor
         int x = getX();
         int y = getY()+speed;
         setLocation(x,y);
-        speed = speed;
         MyWorld world = (MyWorld) getWorld();
+        speed = world.score/10;
         if(getY() >= world.getHeight())
         {
+            world.score -= 5;
             world.gameOver();
             world.removeObject(this);
+            if(world.score > 0)
+            {
+                world.createApple();
+            }
         }
     }
 }

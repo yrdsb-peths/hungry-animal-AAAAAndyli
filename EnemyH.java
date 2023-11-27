@@ -31,15 +31,17 @@ public class EnemyH extends Actor
         if(direction == 0)
         {
             setImage(crocR);
-            move(world.score/10+1);
+            move(world.score/2+1);
         }
         else
         {
             setImage(crocL);
-            move(-1*world.score/10-1);
+            move(-1*world.score/2-1);
         }
         if(isTouching(Elephant.class))
         {
+            world.removeObject(this);
+            world.score -= 5;
             world.gameOver();
         }
     }

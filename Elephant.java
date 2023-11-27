@@ -43,6 +43,7 @@ public class Elephant extends Actor
     {
         x = getX();
         y = getY();
+        
         if(Greenfoot.isKeyDown("left"))
         {
             hMovement -= 1.2;
@@ -69,6 +70,7 @@ public class Elephant extends Actor
         {
             dash();
         }
+        bounding();
         setLocation(x+(int)hMovement, y+jumpHeight);
         if(y< 300)
         {
@@ -100,7 +102,6 @@ public class Elephant extends Actor
         {
             hMovement--;
         }
-        
         eat();
         dashable++;
         animateElephant();
@@ -150,6 +151,19 @@ public class Elephant extends Actor
             }
             dashable = 0;
         }
+    }
+    
+    public void bounding()
+    {
+        if(getX()>600)
+        {
+            x = 600;
+        }
+        else if(getX() < 0)
+        {
+            x = 0;
+        }
+
     }
     
     int imageIndex = 0;
