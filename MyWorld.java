@@ -14,6 +14,7 @@ public class MyWorld extends World
      * 
      */
     public int score = 0;
+    public int highestScore = score;
     Label scoreLabel;
     SimpleTimer enemyTimer = new SimpleTimer();
     boolean gameOver = false;
@@ -36,19 +37,22 @@ public class MyWorld extends World
     
     public void act()
     {
-        if(enemyTimer.millisElapsed() > 5000-10*score&&!gameOver)
+        if(enemyTimer.millisElapsed() > 5000-10*highestScore&&!gameOver)
         {            
             createEnemyH();
+        }
+        if(highestScore < score)
+        {
+            highestScore = score;
         }
     }
     
     public void gameOver()
     {
+        scoreLabel.setValue(score);
         if(score < 0)
         {
-            score = 0;
-            scoreLabel = new Label(0,80);
-            addObject(scoreLabel, 50, 50);
+            scoreLabel.setValue(0);
             Label gameOverLabel = new Label ("Game Over", 100);
             addObject(gameOverLabel, 300, 200);
             gameOver = true;
@@ -81,7 +85,7 @@ public class MyWorld extends World
         {
             addObject(warning, 20, 200);
             warningOnScreen = true;
-            if(enemyTimer.millisElapsed() > 1000-score*10)
+            if(enemyTimer.millisElapsed() > 1000-highestScore*10)
             {
                 warningOnScreen = false;
                 addObject(croc, 0, 330);
@@ -92,7 +96,7 @@ public class MyWorld extends World
         {
             addObject(warning, 580, 200);
             warningOnScreen = true;
-            if(enemyTimer.millisElapsed() > 1000-score*10&&warningOnScreen == true)
+            if(enemyTimer.millisElapsed() > 1000-highestScore*10)
             {
                 warningOnScreen = false;
                 addObject(croc, 600, 330);

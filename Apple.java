@@ -19,10 +19,10 @@ public class Apple extends Actor
         int y = getY()+speed;
         setLocation(x,y);
         MyWorld world = (MyWorld) getWorld();
-        speed = world.score/10+1;
+        speed = world.highestScore/10+1;
         if(getY() >= world.getHeight())
         {
-            world.score -= 5;
+            world.score -= 1;
             world.gameOver();
             world.removeObject(this);
             if(world.score > 0)
