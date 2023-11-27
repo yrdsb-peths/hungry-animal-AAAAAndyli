@@ -37,7 +37,7 @@ public class MyWorld extends World
     
     public void act()
     {
-        if(enemyTimer.millisElapsed() > 5000-10*highestScore&&!gameOver)
+        if(enemyTimer.millisElapsed() > 4000-highestScore*enemyTimer.millisElapsed()/10&&!gameOver)
         {            
             createEnemyH();
         }
@@ -85,7 +85,7 @@ public class MyWorld extends World
         {
             addObject(warning, 20, 200);
             warningOnScreen = true;
-            if(enemyTimer.millisElapsed() > 1000-highestScore*10)
+            if(enemyTimer.millisElapsed() > 1000-highestScore*enemyTimer.millisElapsed()/10)
             {
                 warningOnScreen = false;
                 addObject(croc, 0, 330);
@@ -96,7 +96,7 @@ public class MyWorld extends World
         {
             addObject(warning, 580, 200);
             warningOnScreen = true;
-            if(enemyTimer.millisElapsed() > 1000-highestScore*10)
+            if(enemyTimer.millisElapsed() > 1000-highestScore*enemyTimer.millisElapsed()/10)
             {
                 warningOnScreen = false;
                 addObject(croc, 600, 330);
