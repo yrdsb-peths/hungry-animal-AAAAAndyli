@@ -127,9 +127,13 @@ public class Elephant extends Actor
     {
         if(dashable > 100)
         {
-            jumpHeight = 0;
-            gravityModifier = 0;
-            peakJump = true;
+            if(y!=300)
+            {
+                jumpHeight = 0;
+                gravityModifier = 0;
+                peakJump = true;
+                isGrounded = false;
+            }
             if(facing == "left")
             {
                 hMovement = -20;
