@@ -10,6 +10,7 @@ public class Elephant extends Actor
     int dashable = 0;
     boolean isGrounded = true;
     boolean peakJump = false;
+    
     GreenfootSound elephantSound = new GreenfootSound("elephantcub.mp3");
     GreenfootImage[] idleRight = new GreenfootImage[8];
     GreenfootImage[] idleLeft = new GreenfootImage[8];
@@ -99,6 +100,7 @@ public class Elephant extends Actor
         {
             hMovement--;
         }
+        
         eat();
         dashable++;
         animateElephant();
