@@ -14,25 +14,41 @@ public class Missile extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     GreenfootImage MR = new GreenfootImage("images/rocket.png");      
-    GreenfootImage ML = new GreenfootImage("images/rocket.png"); 
     private int direction = -1;
+    boolean isSpawned = false;
     public Missile(int direction)
     {
-        ML.mirrorHorizontally();
         this.direction = direction;
     }
     public void act()
     {
-        MyWorld world = (MyWorld) getWorld();        
+        MyWorld world = (MyWorld) getWorld();  
+        if(!isSpawned)
+        {
+            turnTowards(world.eleX, world.eleY);
+        }   
+        move(7);
         if(direction == 0)
         {
-            setImage(MR);
-            move(7);
+            if(world.eleY > getY())
+            {
+                turn(1);
+            }
+            else
+            {
+                turn(-1);
+            }
         }
         else
         {
-            setImage(ML);
-            move(-7);
+            if(world.eleY > getY())
+            {
+                turn(-1);
+            }
+            else
+            {
+                turn(1);
+            }
         }
         if(isTouching(Elephant.class))
         {
@@ -44,5 +60,6 @@ public class Missile extends Actor
         {
             world.removeObject(this);
         }
+        isSpawned = true;
     }
 }

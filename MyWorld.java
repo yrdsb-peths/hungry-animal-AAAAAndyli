@@ -20,6 +20,9 @@ public class MyWorld extends World
     boolean warningOnScreen = false;
     boolean mwarningOnScreen = false;
     
+    public int eleX = 0;
+    public int eleY = 0;
+    
     int dir = 0;
     int mdir = 0;
     int intervals = 0;
@@ -47,7 +50,9 @@ public class MyWorld extends World
     
     public void act()
     {
-        if(timer.millisElapsed() > 4000-intervals*10)
+        eleX = elephant.getX();
+        eleY = elephant.getY();
+        if(timer.millisElapsed() > 4000-intervals*50)
         {            
             createEnemyMH();
             createEnemyH();
