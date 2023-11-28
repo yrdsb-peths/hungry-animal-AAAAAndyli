@@ -15,6 +15,7 @@ public class Missile extends Actor
      */
     GreenfootImage MR = new GreenfootImage("images/rocket.png");      
     private int direction = -1;
+    int turn = 2;
     boolean isSpawned = false;
     public Missile(int direction)
     {
@@ -32,22 +33,22 @@ public class Missile extends Actor
         {
             if(world.eleY > getY())
             {
-                turn(1);
+                turn(turn);
             }
             else
             {
-                turn(-1);
+                turn(-1*turn);
             }
         }
         else
         {
             if(world.eleY > getY())
             {
-                turn(-1);
+                turn(-1*turn);
             }
             else
             {
-                turn(1);
+                turn(turn);
             }
         }
         if(isTouching(Elephant.class))

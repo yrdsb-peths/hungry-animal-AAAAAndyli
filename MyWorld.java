@@ -19,7 +19,7 @@ public class MyWorld extends World
     boolean gameOver = false;
     boolean warningOnScreen = false;
     boolean mwarningOnScreen = false;
-    boolean croc = false;
+    boolean croc = true;
     boolean miss = true;
     
     public int eleX = 0;
@@ -137,7 +137,7 @@ public class MyWorld extends World
         {
             missileTimer.mark();
             mdir = Greenfoot.getRandomNumber(2);
-            height = elephant.getY();
+            height = Greenfoot.getRandomNumber(400);
         }
         Missile missile = new Missile(mdir);
         if(mdir == 0)
