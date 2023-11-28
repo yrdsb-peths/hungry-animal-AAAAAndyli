@@ -25,10 +25,14 @@ public class Apple extends Actor
             world.score -= 1;
             world.gameOver();
             world.removeObject(this);
-            if(world.score > 0)
+            if(world.score >= 0)
             {
                 world.createApple();
             }
+        }
+        if(world.score < 0)
+        {
+            setLocation(x, 100000);
         }
     }
 }
