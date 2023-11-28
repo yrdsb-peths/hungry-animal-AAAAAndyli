@@ -19,6 +19,8 @@ public class MyWorld extends World
     boolean gameOver = false;
     boolean warningOnScreen = false;
     boolean mwarningOnScreen = false;
+    boolean croc = false;
+    boolean miss = true;
     
     public int eleX = 0;
     public int eleY = 0;
@@ -54,8 +56,14 @@ public class MyWorld extends World
         eleY = elephant.getY();
         if(timer.millisElapsed() > 4000-intervals*50)
         {            
-            createEnemyMH();
-            createEnemyH();
+            if(miss)
+            {
+                createEnemyMH();
+            }
+            if(croc)
+            {
+                createEnemyH();
+            }
             timer.mark();
             intervals++;
         }
