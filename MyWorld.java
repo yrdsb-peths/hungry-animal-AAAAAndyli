@@ -19,11 +19,13 @@ public class MyWorld extends World
     boolean gameOver = false;
     boolean warningOnScreen = false;
     boolean mwarningOnScreen = false;
-    boolean croc = true;
+    boolean croc = false;
     boolean miss = true;
+    boolean apple = true;
     
     public int eleX = 0;
     public int eleY = 0;
+    public int gameMode;
     
     int dir = 0;
     int mdir = 0;
@@ -44,10 +46,45 @@ public class MyWorld extends World
         scoreLabel = new Label(0,80);
         addObject(scoreLabel, 50, 50);
         
-        createApple();
         enemyTimer.mark();
         missileTimer.mark();
         timer.mark();
+        if(gameMode == 0)
+        {
+            //easy gm
+            apple = true;
+            croc = false;
+            miss = false;
+        }
+        else if(gameMode == 1)
+        {
+            //normal gm
+            apple = true;
+            croc = true;
+            miss = false;
+        }
+        else if(gameMode == 2)
+        {
+            //hard gm
+            apple = true;
+            croc = true;
+            miss = true;
+        }
+        else if(gameMode == 3)
+        {
+            //missile gm
+            apple = false;
+            croc = false;
+            miss = true;
+        }
+        else if(gameMode == 4)
+        {
+            //enemy gm
+            apple = false;
+            croc = true;
+            miss = true;
+        }
+        createApple();
     }
     
     public void act()
@@ -95,9 +132,12 @@ public class MyWorld extends World
     
     public void createApple()
     {
-        Apple apple = new Apple();
-        int x = Greenfoot.getRandomNumber(600);
-        addObject(apple, x, 0);
+        if(apple)
+        {
+            Apple apple = new Apple();
+            int x = Greenfoot.getRandomNumber(600);
+            addObject(apple, x, 0);
+        }
     }
     
     public void createEnemyH()

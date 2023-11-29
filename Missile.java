@@ -16,7 +16,7 @@ public class Missile extends Actor
     SimpleTimer animationTimer = new SimpleTimer();
     GreenfootImage MR = new GreenfootImage("images/rocket.png");      
     private int direction = -1;
-    int turn = 1;
+    int turn = 2;
     GreenfootImage[] missile = new GreenfootImage[3];
     boolean isSpawned = false;
     public Missile(int direction)
@@ -36,7 +36,7 @@ public class Missile extends Actor
         {
             turnTowards(world.eleX, world.eleY);
         }   
-        move(5);
+        move(7);
         if(direction == 0)
         {
             if(world.eleY > getY())
