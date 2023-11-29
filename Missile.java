@@ -13,16 +13,24 @@ public class Missile extends Actor
      * Act - do whatever the Missile wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    SimpleTimer animationTimer = new SimpleTimer();
     GreenfootImage MR = new GreenfootImage("images/rocket.png");      
     private int direction = -1;
     int turn = 2;
+    GreenfootImage[] missile = new GreenfootImage[3];
     boolean isSpawned = false;
     public Missile(int direction)
     {
         this.direction = direction;
+        for(int i = 0; i < 3; i++)
+        {
+            missile[i] = new GreenfootImage("images/rocket/_a_frm" + i + ",100.png");
+            missile[i].scale(64,50);
+        }
     }
     public void act()
     {
+        animate();
         MyWorld world = (MyWorld) getWorld();  
         if(!isSpawned)
         {
@@ -62,5 +70,17 @@ public class Missile extends Actor
             world.removeObject(this);
         }
         isSpawned = true;
+    }
+    
+    int imageIndex = 0;
+    public void animate()
+    {
+        if(animationTimer.millisElapsed() < 100)
+        {
+            return;
+        }
+        animationTimer.mark();
+        setImage(missile[imageIndex]);
+        imageIndex = (imageIndex + 1) % missile.length;
     }
 }

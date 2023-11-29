@@ -13,6 +13,12 @@ public class Apple extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public int speed = 1;
+    public Apple()
+    {
+        GreenfootImage appleImage = new GreenfootImage("images/apple.png");
+        appleImage.scale(75,75);   
+        setImage(appleImage);
+    }
     public void act()
     {
         int x = getX();
