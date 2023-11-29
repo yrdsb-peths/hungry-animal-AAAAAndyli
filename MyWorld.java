@@ -82,6 +82,8 @@ public class MyWorld extends World
             Label gameOverLabel = new Label ("Game Over", 100);
             addObject(gameOverLabel, 300, 200);
             gameOver = true;
+            croc = false;
+            miss = false;
         }
     }
     

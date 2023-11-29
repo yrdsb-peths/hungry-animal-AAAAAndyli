@@ -16,7 +16,7 @@ public class Missile extends Actor
     SimpleTimer animationTimer = new SimpleTimer();
     GreenfootImage MR = new GreenfootImage("images/rocket.png");      
     private int direction = -1;
-    int turn = 2;
+    int turn = 1;
     GreenfootImage[] missile = new GreenfootImage[3];
     boolean isSpawned = false;
     public Missile(int direction)
