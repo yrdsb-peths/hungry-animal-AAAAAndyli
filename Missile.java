@@ -36,7 +36,7 @@ public class Missile extends Actor
         {
             turnTowards(world.eleX, world.eleY);
         }   
-        move(7);
+        move(5);
         if(direction == 0)
         {
             if(world.eleY > getY())
