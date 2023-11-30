@@ -27,12 +27,12 @@ public class EnemyH extends Actor
         if(direction == 0)
         {
             setImage(crocR);
-            move(world.highestScore/5+1);
+            move(world.highestScore/10+1);
         }
         else
         {
             setImage(crocL);
-            move(-1*world.highestScore/5-1);
+            move(-1*world.highestScore/10-1);
         }
         if(isTouching(Elephant.class))
         {

@@ -11,10 +11,12 @@ public class MyWorld extends World
     public int score = 0;
     public int highestScore = score;
     Label scoreLabel;
+    Label highScoreLabel;
     
     SimpleTimer enemyTimer = new SimpleTimer();
     SimpleTimer missileTimer = new SimpleTimer();
     SimpleTimer timer = new SimpleTimer();
+    SimpleTimer worldTimer = new SimpleTimer();
         
     boolean gameOver = false;
     boolean warningOnScreen = false;
@@ -23,15 +25,16 @@ public class MyWorld extends World
     boolean miss = false;
     boolean apple = false;
     boolean isGameStarted = false;
+    boolean isTimer = false;
     
     public int eleX = 0;
     public int eleY = 0;
 
-    
     int dir = 0;
     int mdir = 0;
     int intervals = 0;
     int height = 0;
+    
     Elephant elephant = new Elephant();
     Menu menu = new Menu();
     /**
@@ -49,10 +52,13 @@ public class MyWorld extends World
         scoreLabel = new Label(0,80);
         addObject(scoreLabel, 50, 50);
         
+        highScoreLabel = new Label(0,80);
+        addObject(highScoreLabel, 50, 120);
+        
         enemyTimer.mark();
         missileTimer.mark();
         timer.mark();
-        
+        worldTimer.mark();
     }
     
     public void act()
@@ -92,7 +98,9 @@ public class MyWorld extends World
                 apple = false;
                 croc = false;
                 miss = true;
+                isTimer = true;
                 isGameStarted = true;
+                worldTimer.mark();
             }
             else if(Greenfoot.isKeyDown("5"))
             {
@@ -100,11 +108,18 @@ public class MyWorld extends World
                 apple = false;
                 croc = true;
                 miss = true;
+                isTimer = true;
                 isGameStarted = true;
+                worldTimer.mark();
             }
         }
         eleX = elephant.getX();
         eleY = elephant.getY();
+        if(isTimer&&!gameOver)
+        {
+            highestScore = (worldTimer.millisElapsed())/1000;
+        }
+        highScoreLabel.setValue(highestScore); 
         if(timer.millisElapsed() > 4000-intervals*50)
         {            
             if(miss)
