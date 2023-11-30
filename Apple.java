@@ -13,6 +13,12 @@ public class Apple extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public int speed = 1;
+    public Apple()
+    {
+        GreenfootImage appleImage = new GreenfootImage("images/apple.png");
+        appleImage.scale(75,75);   
+        setImage(appleImage);
+    }
     public void act()
     {
         int x = getX();
@@ -25,10 +31,14 @@ public class Apple extends Actor
             world.score -= 1;
             world.gameOver();
             world.removeObject(this);
-            if(world.score > 0)
+            if(world.score >= 0)
             {
                 world.createApple();
             }
+        }
+        if(world.score < 0)
+        {
+            setLocation(x, 100000);
         }
     }
 }

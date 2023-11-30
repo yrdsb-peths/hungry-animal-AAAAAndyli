@@ -20,10 +20,13 @@ public class MyWorld extends World
     boolean warningOnScreen = false;
     boolean mwarningOnScreen = false;
     boolean croc = false;
-    boolean miss = true;
+    boolean miss = false;
+    boolean apple = false;
+    boolean isGameStarted = false;
     
     public int eleX = 0;
     public int eleY = 0;
+
     
     int dir = 0;
     int mdir = 0;
@@ -44,14 +47,60 @@ public class MyWorld extends World
         scoreLabel = new Label(0,80);
         addObject(scoreLabel, 50, 50);
         
-        createApple();
         enemyTimer.mark();
         missileTimer.mark();
         timer.mark();
+        
     }
     
     public void act()
     {
+        if(isGameStarted == false)
+        {
+            if(Greenfoot.isKeyDown("1"))
+            {
+                //easy gm
+                apple = true;
+                croc = false;
+                miss = false;
+                isGameStarted = true;
+                createApple();
+            }
+            else if(Greenfoot.isKeyDown("2"))
+            {
+                //normal gm
+                apple = true;
+                croc = true;
+                miss = false;
+                isGameStarted = true;
+                createApple();
+            }
+            else if(Greenfoot.isKeyDown("3"))
+            {
+                //hard gm
+                apple = true;
+                croc = true;
+                miss = true;
+                isGameStarted = true;
+                createApple();
+            }
+            else if(Greenfoot.isKeyDown("4"))
+            {
+                //missile gm
+                apple = false;
+                croc = false;
+                miss = true;
+                isGameStarted = true;
+            }
+            else if(Greenfoot.isKeyDown("5"))
+            {
+                //enemy gm
+                apple = false;
+                croc = true;
+                miss = true;
+                isGameStarted = true;
+            }
+        }
         eleX = elephant.getX();
         eleY = elephant.getY();
         if(timer.millisElapsed() > 4000-intervals*50)
@@ -82,6 +131,8 @@ public class MyWorld extends World
             Label gameOverLabel = new Label ("Game Over", 100);
             addObject(gameOverLabel, 300, 200);
             gameOver = true;
+            croc = false;
+            miss = false;
         }
     }
     
@@ -93,9 +144,12 @@ public class MyWorld extends World
     
     public void createApple()
     {
-        Apple apple = new Apple();
-        int x = Greenfoot.getRandomNumber(600);
-        addObject(apple, x, 0);
+        if(apple)
+        {
+            Apple apple = new Apple();
+            int x = Greenfoot.getRandomNumber(600);
+            addObject(apple, x, 0);
+        }
     }
     
     public void createEnemyH()
@@ -137,7 +191,7 @@ public class MyWorld extends World
         {
             missileTimer.mark();
             mdir = Greenfoot.getRandomNumber(2);
-            height = elephant.getY();
+            height = Greenfoot.getRandomNumber(400);
         }
         Missile missile = new Missile(mdir);
         if(mdir == 0)
