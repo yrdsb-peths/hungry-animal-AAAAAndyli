@@ -20,12 +20,13 @@ public class MyWorld extends World
     boolean warningOnScreen = false;
     boolean mwarningOnScreen = false;
     boolean croc = false;
-    boolean miss = true;
-    boolean apple = true;
+    boolean miss = false;
+    boolean apple = false;
+    boolean isGameStarted = false;
     
     public int eleX = 0;
     public int eleY = 0;
-    public int gameMode;
+
     
     int dir = 0;
     int mdir = 0;
@@ -49,46 +50,57 @@ public class MyWorld extends World
         enemyTimer.mark();
         missileTimer.mark();
         timer.mark();
-        if(gameMode == 0)
-        {
-            //easy gm
-            apple = true;
-            croc = false;
-            miss = false;
-        }
-        else if(gameMode == 1)
-        {
-            //normal gm
-            apple = true;
-            croc = true;
-            miss = false;
-        }
-        else if(gameMode == 2)
-        {
-            //hard gm
-            apple = true;
-            croc = true;
-            miss = true;
-        }
-        else if(gameMode == 3)
-        {
-            //missile gm
-            apple = false;
-            croc = false;
-            miss = true;
-        }
-        else if(gameMode == 4)
-        {
-            //enemy gm
-            apple = false;
-            croc = true;
-            miss = true;
-        }
-        createApple();
+        
     }
     
     public void act()
     {
+        if(isGameStarted == false)
+        {
+            if(Greenfoot.isKeyDown("1"))
+            {
+                //easy gm
+                apple = true;
+                croc = false;
+                miss = false;
+                isGameStarted = true;
+                createApple();
+            }
+            else if(Greenfoot.isKeyDown("2"))
+            {
+                //normal gm
+                apple = true;
+                croc = true;
+                miss = false;
+                isGameStarted = true;
+                createApple();
+            }
+            else if(Greenfoot.isKeyDown("3"))
+            {
+                //hard gm
+                apple = true;
+                croc = true;
+                miss = true;
+                isGameStarted = true;
+                createApple();
+            }
+            else if(Greenfoot.isKeyDown("4"))
+            {
+                //missile gm
+                apple = false;
+                croc = false;
+                miss = true;
+                isGameStarted = true;
+            }
+            else if(Greenfoot.isKeyDown("5"))
+            {
+                //enemy gm
+                apple = false;
+                croc = true;
+                miss = true;
+                isGameStarted = true;
+            }
+        }
         eleX = elephant.getX();
         eleY = elephant.getY();
         if(timer.millisElapsed() > 4000-intervals*50)
