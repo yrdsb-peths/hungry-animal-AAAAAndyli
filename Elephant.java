@@ -158,10 +158,12 @@ public class Elephant extends Actor
         if(getX()>600)
         {
             x = 600;
+            hMovement = 0;
         }
         else if(getX() < 0)
         {
             x = 0;
+            hMovement = 0;
         }
 
     }
