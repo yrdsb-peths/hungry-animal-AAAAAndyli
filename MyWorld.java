@@ -33,6 +33,7 @@ public class MyWorld extends World
     int intervals = 0;
     int height = 0;
     Elephant elephant = new Elephant();
+    Menu menu = new Menu();
     /**
      * Constructor for objects of class MyWorld.
      * 
@@ -43,6 +44,7 @@ public class MyWorld extends World
         super(600, 400, 1, false);
         
         addObject(elephant, 300, 300);
+        addObject(menu, 0, 200);
         
         scoreLabel = new Label(0,80);
         addObject(scoreLabel, 50, 50);
