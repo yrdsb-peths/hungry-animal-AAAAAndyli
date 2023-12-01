@@ -59,11 +59,11 @@ public class MyWorld extends World
         addObject(elephant, 300, 300);
         addObject(menu, 0, 200);
         
-        scoreLabel = new Label(0,80);
-        addObject(scoreLabel, 50, 50);
+        scoreLabel = new Label(0,40);
+        addObject(scoreLabel, 50, 30);
         
-        highScoreLabel = new Label(0,80);
-        addObject(highScoreLabel, 50, 120);
+        highScoreLabel = new Label(0,40);
+        addObject(highScoreLabel, 50, 80);
         
         enemyTimer.mark();
         missileTimer.mark();
@@ -130,7 +130,7 @@ public class MyWorld extends World
             else if(Greenfoot.isKeyDown("6"))
             {
                 //extreme difficulty, Secret
-                score = 39;
+                score = 99;
                 increaseScore();
                 song = 4;
                 apple = true;
@@ -155,15 +155,16 @@ public class MyWorld extends World
         {
             highestScore = (worldTimer.millisElapsed())/1000;
         }
-        
-        highScoreLabel.setValue(highestScore); 
-        if(timer.millisElapsed() > 4000-intervals*50 || isSecret &&timer.millisElapsed() > 1000-intervals*10)
-        {            
-            spawnEnemies();
-        }
-        if(highestScore < score)
+        else if(highestScore < score)
         {
             highestScore = score;
+        }
+        
+        
+        highScoreLabel.setValue(highestScore); 
+        if(timer.millisElapsed() > 4000-intervals*50 || isSecret &&timer.millisElapsed() > 1000-intervals*5)
+        {            
+            spawnEnemies();
         }
     }
     
