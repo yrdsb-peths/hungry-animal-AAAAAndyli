@@ -15,6 +15,7 @@ public class Missile extends Actor
      */
     SimpleTimer animationTimer = new SimpleTimer();
     GreenfootImage MR = new GreenfootImage("images/rocket.png");      
+    GreenfootSound boom = new GreenfootSound("boom.mp3");
     private int direction = -1;
     int turn = 2;
     GreenfootImage[] missile = new GreenfootImage[3];
@@ -64,6 +65,7 @@ public class Missile extends Actor
             world.score -= 5;
             world.gameOver();
             move(5000);
+            boom.play();
         }
         if(getX() > 700 || getX() < -100)
         {

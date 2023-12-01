@@ -18,6 +18,12 @@ public class MyWorld extends World
     SimpleTimer timer = new SimpleTimer();
     SimpleTimer worldTimer = new SimpleTimer();
         
+    GreenfootSound loss = new GreenfootSound("loss.mp3");
+    GreenfootSound eSong = new GreenfootSound("EasySong.mp3");
+    GreenfootSound nSong = new GreenfootSound("NormalSong.mp3");
+    GreenfootSound hSong1 = new GreenfootSound("HardSongIntro.mp3");
+    GreenfootSound hSong2 = new GreenfootSound("HardSong.mp3");
+    
     boolean gameOver = false;
     boolean warningOnScreen = false;
     boolean mwarningOnScreen = false;
@@ -30,6 +36,7 @@ public class MyWorld extends World
     public int eleX = 0;
     public int eleY = 0;
 
+    int song = -1;
     int dir = 0;
     int mdir = 0;
     int intervals = 0;
@@ -68,6 +75,7 @@ public class MyWorld extends World
             if(Greenfoot.isKeyDown("1"))
             {
                 //easy gm
+                song = 0;
                 apple = true;
                 croc = false;
                 miss = false;
@@ -77,6 +85,7 @@ public class MyWorld extends World
             else if(Greenfoot.isKeyDown("2"))
             {
                 //normal gm
+                song = 1;
                 apple = true;
                 croc = true;
                 miss = false;
@@ -86,6 +95,7 @@ public class MyWorld extends World
             else if(Greenfoot.isKeyDown("3"))
             {
                 //hard gm
+                song = 2;
                 apple = true;
                 croc = true;
                 miss = true;
@@ -95,6 +105,7 @@ public class MyWorld extends World
             else if(Greenfoot.isKeyDown("4"))
             {
                 //missile gm
+                song = 2;
                 apple = false;
                 croc = false;
                 miss = true;
@@ -105,6 +116,7 @@ public class MyWorld extends World
             else if(Greenfoot.isKeyDown("5"))
             {
                 //enemy gm
+                song = 2;
                 apple = false;
                 croc = true;
                 miss = true;
@@ -113,6 +125,11 @@ public class MyWorld extends World
                 worldTimer.mark();
             }
         }
+        else if(!eSong.isPlaying()&&!nSong.isPlaying()&&!hSong1.isPlaying()&&!hSong2.isPlaying())
+        {
+            playMusic();
+        }
+
         eleX = elephant.getX();
         eleY = elephant.getY();
         if(isTimer&&!gameOver)
@@ -150,6 +167,14 @@ public class MyWorld extends World
             gameOver = true;
             croc = false;
             miss = false;
+            loss.play();
+            for(int i = 0; i < 100; i++)
+            {
+                eSong.setVolume(100-i);
+                nSong.setVolume(100-i);
+                hSong1.setVolume(100-i);
+                hSong2.setVolume(100-i);
+            }
         }
     }
     
@@ -233,5 +258,26 @@ public class MyWorld extends World
                 mwarningOnScreen = false;
             }
         }
+    }
+    public void playMusic()
+    {
+        if(song == 0)
+        {
+            eSong.playLoop();
+        }
+        else if(song == 1)
+        {
+            nSong.playLoop();
+        }
+        else if(song == 2)
+        {
+            hSong1.play();
+            song = 3;
+        }
+        else if(song == 3)
+        {
+            hSong2.playLoop();
+        }
+
     }
 }
