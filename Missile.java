@@ -17,7 +17,7 @@ public class Missile extends Actor
     GreenfootImage MR = new GreenfootImage("images/rocket.png");      
     GreenfootSound boom = new GreenfootSound("boom.mp3");
     private int direction = -1;
-    int turn = 1;
+    int turn = 2;
     GreenfootImage[] missile = new GreenfootImage[3];
     boolean isSpawned = false;
     public Missile(int direction)
