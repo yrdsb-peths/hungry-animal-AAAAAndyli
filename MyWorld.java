@@ -34,6 +34,7 @@ public class MyWorld extends World
     boolean isGameStarted = false;
     boolean isTimer = false;
     boolean isSecret = false;
+    boolean isSecretStarted = false;
     
     public int eleX = 0;
     public int eleY = 0;
@@ -72,7 +73,7 @@ public class MyWorld extends World
     
     public void act()
     {
-        if(isGameStarted == false)
+        if(!isGameStarted)
         {
             if(Greenfoot.isKeyDown("1"))
             {
@@ -129,7 +130,7 @@ public class MyWorld extends World
             else if(Greenfoot.isKeyDown("6"))
             {
                 //extreme difficulty, Secret
-                score = 19;
+                score = 39;
                 increaseScore();
                 song = 4;
                 apple = true;
@@ -149,11 +150,8 @@ public class MyWorld extends World
 
         eleX = elephant.getX();
         eleY = elephant.getY();
-        if(isSecret&&!gameOver)
-        {
-            highestScore = (worldTimer.millisElapsed())/500;
-        }
-        else if(isTimer&&!gameOver)
+        
+        if(isTimer&&!gameOver)
         {
             highestScore = (worldTimer.millisElapsed())/1000;
         }
@@ -161,19 +159,7 @@ public class MyWorld extends World
         highScoreLabel.setValue(highestScore); 
         if(timer.millisElapsed() > 4000-intervals*50 || isSecret &&timer.millisElapsed() > 1000-intervals*10)
         {            
-            if(miss)
-            {
-                createEnemyMH();
-            }
-            if(croc)
-            {
-                createEnemyH();
-            }
-            timer.mark();
-            if(intervals < 60)
-            {
-                intervals++;
-            }
+            spawnEnemies();
         }
         if(highestScore < score)
         {
@@ -199,6 +185,7 @@ public class MyWorld extends World
                 nSong.setVolume(100-i);
                 hSong1.setVolume(100-i);
                 hSong2.setVolume(100-i);
+                xSong.setVolume(100-i);
             }
         }
     }
@@ -308,5 +295,26 @@ public class MyWorld extends World
             xSong.playLoop();
         }
 
+    }
+    public void spawnEnemies()
+    {
+        if(timer.millisElapsed() < 21000&&isSecret&&!isSecretStarted)
+        {
+            return;
+        }
+        isSecretStarted = true;        
+        if(miss)
+        {
+            createEnemyMH();
+        }
+        if(croc)
+        {
+            createEnemyH();
+        }
+        timer.mark();
+        if(intervals < 60)
+        {
+            intervals++;
+        }
     }
 }
