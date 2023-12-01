@@ -15,6 +15,7 @@ public class EnemyH extends Actor
      */
     GreenfootImage crocR = new GreenfootImage("images/alligator.png");      
     GreenfootImage crocL = new GreenfootImage("images/alligator.png"); 
+    GreenfootSound bite = new GreenfootSound("bite.mp3");
     private int direction = -1;
     public EnemyH(int direction)
     {
@@ -39,6 +40,7 @@ public class EnemyH extends Actor
             world.score -= 5;
             world.gameOver();
             move(5000);
+            bite.play();
         }
         if(getX() > 600 || getX() < 0)
         {
