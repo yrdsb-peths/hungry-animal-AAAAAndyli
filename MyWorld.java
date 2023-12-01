@@ -23,6 +23,7 @@ public class MyWorld extends World
     GreenfootSound nSong = new GreenfootSound("NormalSong.mp3");
     GreenfootSound hSong1 = new GreenfootSound("HardSongIntro.mp3");
     GreenfootSound hSong2 = new GreenfootSound("HardSong.mp3");
+    GreenfootSound xSong = new GreenfootSound("ExtremeSong.mp3");
     
     boolean gameOver = false;
     boolean warningOnScreen = false;
@@ -32,6 +33,7 @@ public class MyWorld extends World
     boolean apple = false;
     boolean isGameStarted = false;
     boolean isTimer = false;
+    boolean isSecret = false;
     
     public int eleX = 0;
     public int eleY = 0;
@@ -124,6 +126,21 @@ public class MyWorld extends World
                 isGameStarted = true;
                 worldTimer.mark();
             }
+            else if(Greenfoot.isKeyDown("6"))
+            {
+                //extreme difficulty, Secret
+                score = 19;
+                increaseScore();
+                song = 4;
+                apple = true;
+                croc = true;
+                miss = true;
+                isTimer = true;
+                isGameStarted = true;
+                isSecret = true;
+                worldTimer.mark();
+                createApple();
+            }
         }
         else if(!eSong.isPlaying()&&!nSong.isPlaying()&&!hSong1.isPlaying()&&!hSong2.isPlaying())
         {
@@ -132,12 +149,17 @@ public class MyWorld extends World
 
         eleX = elephant.getX();
         eleY = elephant.getY();
-        if(isTimer&&!gameOver)
+        if(isSecret&&!gameOver)
+        {
+            highestScore = (worldTimer.millisElapsed())/500;
+        }
+        else if(isTimer&&!gameOver)
         {
             highestScore = (worldTimer.millisElapsed())/1000;
         }
+        
         highScoreLabel.setValue(highestScore); 
-        if(timer.millisElapsed() > 4000-intervals*50)
+        if(timer.millisElapsed() > 4000-intervals*50 || isSecret &&timer.millisElapsed() > 1000-intervals*10)
         {            
             if(miss)
             {
@@ -148,7 +170,10 @@ public class MyWorld extends World
                 createEnemyH();
             }
             timer.mark();
-            intervals++;
+            if(intervals < 60)
+            {
+                intervals++;
+            }
         }
         if(highestScore < score)
         {
@@ -277,6 +302,10 @@ public class MyWorld extends World
         else if(song == 3)
         {
             hSong2.playLoop();
+        }
+        else if(song == 4)
+        {
+            xSong.playLoop();
         }
 
     }
