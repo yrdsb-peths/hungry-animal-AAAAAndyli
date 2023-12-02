@@ -14,7 +14,7 @@ public class Missile extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     SimpleTimer animationTimer = new SimpleTimer();
-    GreenfootImage MR = new GreenfootImage("images/rocket.png");      
+    static GreenfootImage MR = new GreenfootImage("images/rocket.png");      
     GreenfootSound boom = new GreenfootSound("boom.mp3");
     private int direction = -1;
     int turn = 2;

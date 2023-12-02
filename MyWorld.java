@@ -12,6 +12,7 @@ public class MyWorld extends World
     public int highestScore = score;
     Label scoreLabel;
     Label highScoreLabel;
+    Label gameOverLabel = new Label("", 100);
     
     SimpleTimer enemyTimer = new SimpleTimer();
     SimpleTimer missileTimer = new SimpleTimer();
@@ -142,6 +143,7 @@ public class MyWorld extends World
                 worldTimer.mark();
                 createApple();
             }
+            worldTimer.mark();
         }
         else if(!eSong.isPlaying()&&!nSong.isPlaying()&&!hSong1.isPlaying()&&!hSong2.isPlaying())
         {
@@ -160,11 +162,15 @@ public class MyWorld extends World
             highestScore = score;
         }
         
-        
         highScoreLabel.setValue(highestScore); 
+        
         if(timer.millisElapsed() > 4000-intervals*50 || isSecret &&timer.millisElapsed() > 1000-intervals*5)
         {            
             spawnEnemies();
+        }
+        if(gameOver&&Greenfoot.isKeyDown("enter"))
+        {
+            restart();
         }
     }
     
@@ -174,21 +180,35 @@ public class MyWorld extends World
         if(score < 0)
         {
             scoreLabel.setValue(0);
-            Label gameOverLabel = new Label ("Game Over", 100);
+            gameOverLabel.setValue("Game Over\nPress <enter> to retry");
             addObject(gameOverLabel, 300, 200);
             gameOver = true;
             croc = false;
             miss = false;
+            warningOnScreen = false;
             loss.play();
-            for(int i = 0; i < 100; i++)
-            {
-                eSong.setVolume(100-i);
-                nSong.setVolume(100-i);
-                hSong1.setVolume(100-i);
-                hSong2.setVolume(100-i);
-                xSong.setVolume(100-i);
-            }
+            
+
+            eSong.stop();
+            nSong.stop();
+            hSong1.stop();
+            hSong2.stop();
+            xSong.stop();
+
         }
+    }
+    public void restart()
+    {
+        highestScore = 0;
+        score = 0;
+        isGameStarted = false;
+        isSecretStarted = false;
+        gameOver = false;
+        gameOverLabel.setValue("");
+        worldTimer.mark();
+        timer.mark();
+        enemyTimer.mark();
+        missileTimer.mark();
     }
     
     public void increaseScore()
@@ -242,13 +262,13 @@ public class MyWorld extends World
     public void createEnemyMH()
     {
         MWarning missilewarning = new MWarning();
+        Missile missile = new Missile(mdir);
         if(!mwarningOnScreen)
         {
             missileTimer.mark();
             mdir = Greenfoot.getRandomNumber(2);
             height = Greenfoot.getRandomNumber(400);
         }
-        Missile missile = new Missile(mdir);
         if(mdir == 0)
         {
             addObject(missilewarning, 20, height);
@@ -256,7 +276,7 @@ public class MyWorld extends World
             if(missileTimer.millisElapsed() > 1000)
             {
                 missileTimer.mark();
-                addObject(missile, 1, height);
+                addObject(missile, -20, height);
                 mwarningOnScreen = false;
             }
         }
@@ -267,31 +287,31 @@ public class MyWorld extends World
             if(missileTimer.millisElapsed() > 1000)
             {
                 missileTimer.mark();
-                addObject(missile, 599, height);
+                addObject(missile, 620, height);
                 mwarningOnScreen = false;
             }
         }
     }
     public void playMusic()
     {
-        if(song == 0)
+        if(song == 0&&!gameOver)
         {
             eSong.playLoop();
         }
-        else if(song == 1)
+        else if(song == 1&&!gameOver)
         {
             nSong.playLoop();
         }
-        else if(song == 2)
+        else if(song == 2&&!gameOver)
         {
             hSong1.play();
             song = 3;
         }
-        else if(song == 3)
+        else if(song == 3&&!gameOver)
         {
             hSong2.playLoop();
         }
-        else if(song == 4)
+        else if(song == 4&&!gameOver)
         {
             xSong.playLoop();
         }
