@@ -46,6 +46,9 @@ public class MyWorld extends World
     int intervals = 0;
     int height = 0;
     
+    GreenfootImage normalImage = new GreenfootImage("images/nmode.png");
+    GreenfootImage extremeImage = new GreenfootImage("images/emode.png");
+    
     Elephant elephant = new Elephant();
     Menu menu = new Menu();
     /**
@@ -141,6 +144,7 @@ public class MyWorld extends World
                 isGameStarted = true;
                 isSecret = true;
                 worldTimer.mark();
+                setBackground(extremeImage);
                 createApple();
             }
             worldTimer.mark();
@@ -200,9 +204,12 @@ public class MyWorld extends World
     }
     public void restart()
     {
+        setBackground(normalImage);
         isGameStarted = false;
         gameOver = false;
         isSecretStarted = false;
+        isSecret = false;
+        isTimer = false;
         worldTimer.mark();
         timer.mark();
         enemyTimer.mark();
@@ -212,10 +219,10 @@ public class MyWorld extends World
         intervals = 0;
         gameOverLabel.setValue("");
         eSong.stop();
-            nSong.stop();
-            hSong1.stop();
-            hSong2.stop();
-            xSong.stop();
+        nSong.stop();
+        hSong1.stop();
+        hSong2.stop();
+        xSong.stop();
     }
     
     public void increaseScore()
