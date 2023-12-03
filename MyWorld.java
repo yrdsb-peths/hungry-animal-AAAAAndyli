@@ -149,7 +149,7 @@ public class MyWorld extends World
             }
             worldTimer.mark();
         }
-        else if(!eSong.isPlaying()&&!nSong.isPlaying()&&!hSong1.isPlaying()&&!hSong2.isPlaying())
+        else if(!eSong.isPlaying()&&!nSong.isPlaying()&&!hSong1.isPlaying()&&!hSong2.isPlaying()&&!xSong.isPlaying())
         {
             playMusic();
         }
@@ -193,18 +193,15 @@ public class MyWorld extends World
             mwarningOnScreen = false;
             loss.play();
             
-
             eSong.stop();
             nSong.stop();
             hSong1.stop();
             hSong2.stop();
             xSong.stop();
-
         }
     }
     public void restart()
     {
-        setBackground(normalImage);
         isGameStarted = false;
         gameOver = false;
         isSecretStarted = false;
@@ -218,11 +215,7 @@ public class MyWorld extends World
         score = 0;
         intervals = 0;
         gameOverLabel.setValue("");
-        eSong.stop();
-        nSong.stop();
-        hSong1.stop();
-        hSong2.stop();
-        xSong.stop();
+        setBackground(normalImage);
     }
     
     public void increaseScore()
