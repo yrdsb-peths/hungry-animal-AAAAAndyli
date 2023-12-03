@@ -105,6 +105,7 @@ public class Elephant extends Actor
         eat();
         dashable++;
         animateElephant();
+
     }
     public void eat()
     {

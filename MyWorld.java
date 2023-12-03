@@ -26,7 +26,7 @@ public class MyWorld extends World
     GreenfootSound hSong2 = new GreenfootSound("HardSong.mp3");
     GreenfootSound xSong = new GreenfootSound("ExtremeSong.mp3");
     
-    boolean gameOver = false;
+    public boolean gameOver = false;
     boolean warningOnScreen = false;
     boolean mwarningOnScreen = false;
     boolean croc = false;
@@ -180,12 +180,13 @@ public class MyWorld extends World
         if(score < 0)
         {
             scoreLabel.setValue(0);
-            gameOverLabel.setValue("Game Over\nPress <enter> to retry");
+            gameOverLabel.setValue("Game Over\n<Enter>");
             addObject(gameOverLabel, 300, 200);
             gameOver = true;
             croc = false;
             miss = false;
             warningOnScreen = false;
+            mwarningOnScreen = false;
             loss.play();
             
 
@@ -199,16 +200,17 @@ public class MyWorld extends World
     }
     public void restart()
     {
-        highestScore = 0;
-        score = 0;
         isGameStarted = false;
-        isSecretStarted = false;
         gameOver = false;
-        gameOverLabel.setValue("");
+        isSecretStarted = false;
         worldTimer.mark();
         timer.mark();
         enemyTimer.mark();
         missileTimer.mark();
+        highestScore = 0;
+        score = 0;
+        intervals = 0;
+        gameOverLabel.setValue("");
     }
     
     public void increaseScore()
