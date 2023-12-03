@@ -14,12 +14,13 @@ public class Missile extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     SimpleTimer animationTimer = new SimpleTimer();
-    GreenfootImage MR = new GreenfootImage("images/rocket.png");      
+    static GreenfootImage MR = new GreenfootImage("images/rocket.png");      
     GreenfootSound boom = new GreenfootSound("boom.mp3");
     private int direction = -1;
-    int turn = 2;
+    int turn = 1;
     GreenfootImage[] missile = new GreenfootImage[3];
     boolean isSpawned = false;
+    
     public Missile(int direction)
     {
         this.direction = direction;
@@ -66,6 +67,10 @@ public class Missile extends Actor
             world.gameOver();
             move(5000);
             boom.play();
+        }
+        if(world.gameOver)
+        {
+            setLocation(0, 100000);
         }
         if(getX() > 700 || getX() < -100)
         {

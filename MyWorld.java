@@ -12,6 +12,7 @@ public class MyWorld extends World
     public int highestScore = score;
     Label scoreLabel;
     Label highScoreLabel;
+    Label gameOverLabel = new Label("", 100);
     
     SimpleTimer enemyTimer = new SimpleTimer();
     SimpleTimer missileTimer = new SimpleTimer();
@@ -23,8 +24,9 @@ public class MyWorld extends World
     GreenfootSound nSong = new GreenfootSound("NormalSong.mp3");
     GreenfootSound hSong1 = new GreenfootSound("HardSongIntro.mp3");
     GreenfootSound hSong2 = new GreenfootSound("HardSong.mp3");
+    GreenfootSound xSong = new GreenfootSound("ExtremeSong.mp3");
     
-    boolean gameOver = false;
+    public boolean gameOver = false;
     boolean warningOnScreen = false;
     boolean mwarningOnScreen = false;
     boolean croc = false;
@@ -32,6 +34,8 @@ public class MyWorld extends World
     boolean apple = false;
     boolean isGameStarted = false;
     boolean isTimer = false;
+    boolean isSecret = false;
+    boolean isSecretStarted = false;
     
     public int eleX = 0;
     public int eleY = 0;
@@ -56,11 +60,11 @@ public class MyWorld extends World
         addObject(elephant, 300, 300);
         addObject(menu, 0, 200);
         
-        scoreLabel = new Label(0,80);
-        addObject(scoreLabel, 50, 50);
+        scoreLabel = new Label(0,40);
+        addObject(scoreLabel, 50, 30);
         
-        highScoreLabel = new Label(0,80);
-        addObject(highScoreLabel, 50, 120);
+        highScoreLabel = new Label(0,40);
+        addObject(highScoreLabel, 50, 80);
         
         enemyTimer.mark();
         missileTimer.mark();
@@ -70,7 +74,7 @@ public class MyWorld extends World
     
     public void act()
     {
-        if(isGameStarted == false)
+        if(!isGameStarted)
         {
             if(Greenfoot.isKeyDown("1"))
             {
@@ -124,6 +128,22 @@ public class MyWorld extends World
                 isGameStarted = true;
                 worldTimer.mark();
             }
+            else if(Greenfoot.isKeyDown("6"))
+            {
+                //extreme difficulty, Secret
+                score = 99;
+                increaseScore();
+                song = 4;
+                apple = true;
+                croc = true;
+                miss = true;
+                isTimer = true;
+                isGameStarted = true;
+                isSecret = true;
+                worldTimer.mark();
+                createApple();
+            }
+            worldTimer.mark();
         }
         else if(!eSong.isPlaying()&&!nSong.isPlaying()&&!hSong1.isPlaying()&&!hSong2.isPlaying())
         {
@@ -132,27 +152,25 @@ public class MyWorld extends World
 
         eleX = elephant.getX();
         eleY = elephant.getY();
+        
         if(isTimer&&!gameOver)
         {
             highestScore = (worldTimer.millisElapsed())/1000;
         }
-        highScoreLabel.setValue(highestScore); 
-        if(timer.millisElapsed() > 4000-intervals*50)
-        {            
-            if(miss)
-            {
-                createEnemyMH();
-            }
-            if(croc)
-            {
-                createEnemyH();
-            }
-            timer.mark();
-            intervals++;
-        }
-        if(highestScore < score)
+        else if(highestScore < score)
         {
             highestScore = score;
+        }
+        
+        highScoreLabel.setValue(highestScore); 
+        
+        if(timer.millisElapsed() > 4000-intervals*50 || isSecret &&timer.millisElapsed() > 1000-intervals*5)
+        {            
+            spawnEnemies();
+        }
+        if(gameOver&&Greenfoot.isKeyDown("enter"))
+        {
+            restart();
         }
     }
     
@@ -162,20 +180,37 @@ public class MyWorld extends World
         if(score < 0)
         {
             scoreLabel.setValue(0);
-            Label gameOverLabel = new Label ("Game Over", 100);
+            gameOverLabel.setValue("Game Over\n<Enter>");
             addObject(gameOverLabel, 300, 200);
             gameOver = true;
             croc = false;
             miss = false;
+            warningOnScreen = false;
+            mwarningOnScreen = false;
             loss.play();
-            for(int i = 0; i < 100; i++)
-            {
-                eSong.setVolume(100-i);
-                nSong.setVolume(100-i);
-                hSong1.setVolume(100-i);
-                hSong2.setVolume(100-i);
-            }
+            
+
+            eSong.stop();
+            nSong.stop();
+            hSong1.stop();
+            hSong2.stop();
+            xSong.stop();
+
         }
+    }
+    public void restart()
+    {
+        isGameStarted = false;
+        gameOver = false;
+        isSecretStarted = false;
+        worldTimer.mark();
+        timer.mark();
+        enemyTimer.mark();
+        missileTimer.mark();
+        highestScore = 0;
+        score = 0;
+        intervals = 0;
+        gameOverLabel.setValue("");
     }
     
     public void increaseScore()
@@ -229,13 +264,13 @@ public class MyWorld extends World
     public void createEnemyMH()
     {
         MWarning missilewarning = new MWarning();
+        Missile missile = new Missile(mdir);
         if(!mwarningOnScreen)
         {
             missileTimer.mark();
             mdir = Greenfoot.getRandomNumber(2);
             height = Greenfoot.getRandomNumber(400);
         }
-        Missile missile = new Missile(mdir);
         if(mdir == 0)
         {
             addObject(missilewarning, 20, height);
@@ -243,7 +278,7 @@ public class MyWorld extends World
             if(missileTimer.millisElapsed() > 1000)
             {
                 missileTimer.mark();
-                addObject(missile, 1, height);
+                addObject(missile, -20, height);
                 mwarningOnScreen = false;
             }
         }
@@ -254,30 +289,55 @@ public class MyWorld extends World
             if(missileTimer.millisElapsed() > 1000)
             {
                 missileTimer.mark();
-                addObject(missile, 599, height);
+                addObject(missile, 620, height);
                 mwarningOnScreen = false;
             }
         }
     }
     public void playMusic()
     {
-        if(song == 0)
+        if(song == 0&&!gameOver)
         {
             eSong.playLoop();
         }
-        else if(song == 1)
+        else if(song == 1&&!gameOver)
         {
             nSong.playLoop();
         }
-        else if(song == 2)
+        else if(song == 2&&!gameOver)
         {
             hSong1.play();
             song = 3;
         }
-        else if(song == 3)
+        else if(song == 3&&!gameOver)
         {
             hSong2.playLoop();
         }
+        else if(song == 4&&!gameOver)
+        {
+            xSong.playLoop();
+        }
 
+    }
+    public void spawnEnemies()
+    {
+        if(timer.millisElapsed() < 21000&&isSecret&&!isSecretStarted)
+        {
+            return;
+        }
+        isSecretStarted = true;        
+        if(miss)
+        {
+            createEnemyMH();
+        }
+        if(croc)
+        {
+            createEnemyH();
+        }
+        timer.mark();
+        if(intervals < 60)
+        {
+            intervals++;
+        }
     }
 }

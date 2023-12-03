@@ -42,9 +42,14 @@ public class EnemyH extends Actor
             move(5000);
             bite.play();
         }
+        if(world.gameOver)
+        {
+            setLocation(0, 100000);
+        }
         if(getX() > 600 || getX() < 0)
         {
             world.removeObject(this);
         }
+
     }
 }
