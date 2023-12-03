@@ -211,6 +211,11 @@ public class MyWorld extends World
         score = 0;
         intervals = 0;
         gameOverLabel.setValue("");
+        eSong.stop();
+            nSong.stop();
+            hSong1.stop();
+            hSong2.stop();
+            xSong.stop();
     }
     
     public void increaseScore()
