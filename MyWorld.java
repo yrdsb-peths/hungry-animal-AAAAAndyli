@@ -203,6 +203,8 @@ public class MyWorld extends World
         isGameStarted = false;
         gameOver = false;
         isSecretStarted = false;
+        isSecret = false;
+        isTimer = false;
         worldTimer.mark();
         timer.mark();
         enemyTimer.mark();
@@ -212,10 +214,10 @@ public class MyWorld extends World
         intervals = 0;
         gameOverLabel.setValue("");
         eSong.stop();
-            nSong.stop();
-            hSong1.stop();
-            hSong2.stop();
-            xSong.stop();
+        nSong.stop();
+        hSong1.stop();
+        hSong2.stop();
+        xSong.stop();
     }
     
     public void increaseScore()
