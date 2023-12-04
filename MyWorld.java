@@ -272,7 +272,7 @@ public class MyWorld extends World
      */
     public void playMusic()
     {
-        if(firstMilli||(!eSong.isPlaying()&&!eSong.isPlaying()&&!nSong.isPlaying()&&!h1Song.isPlaying()&&!h2Song.isPlaying()&&!xSong.isPlaying()))
+        if(firstMilli||(!eSong.isPlaying()&&!eSong.isPlaying()&&!nSong.isPlaying()&&!hSong1.isPlaying()&&!hSong2.isPlaying()&&!xSong.isPlaying()))
         {
             if(song == 0&&!gameOver)
             {
