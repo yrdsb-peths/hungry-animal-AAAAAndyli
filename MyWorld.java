@@ -272,15 +272,23 @@ public class MyWorld extends World
      */
     public void playMusic()
     {
-        if(firstMilli||(!eSong.isPlaying()&&!eSong.isPlaying()&&!nSong.isPlaying()&&!hSong1.isPlaying()&&!hSong2.isPlaying()&&!xSong.isPlaying()))
+        if(firstMilli)
+        {
+            eSong.stop();
+            nSong.stop();
+            hSong1.stop();
+            hSong2.stop();
+            xSong.stop();
+        }
+        if(!eSong.isPlaying()&&!eSong.isPlaying()&&!nSong.isPlaying()&&!hSong1.isPlaying()&&!hSong2.isPlaying()&&!xSong.isPlaying())
         {
             if(song == 0&&!gameOver)
             {
-                eSong.playLoop();
+                eSong.play();
             }
             else if(song == 1&&!gameOver)
             {
-                nSong.playLoop();
+                nSong.play();
             }
             else if(song == 2&&!gameOver)
             {
@@ -289,11 +297,11 @@ public class MyWorld extends World
             }
             else if(song == 3&&!gameOver)
             {
-                hSong2.playLoop();
+                hSong2.play();
             }
             else if(song == 4&&!gameOver)
             {
-                xSong.playLoop();
+                xSong.play();
             }
             firstMilli = false;
         }
