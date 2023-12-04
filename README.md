@@ -7,7 +7,7 @@ Pick the difficulty by pressing number key 1-5.
 Grab Apples to increase your score, don't let them hit the floor.
 Dodge Crocodiles and Missiles.
 
-Difficulty:\n
+Difficulty:
 
 Easy - You only need to catch apples.
 
