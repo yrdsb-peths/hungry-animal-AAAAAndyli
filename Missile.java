@@ -1,18 +1,14 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Simple enemy that spawns randomly, damages player if touching player
+ * Slightly more complex enemy that spawns randomly, damages player if touching player
  * and moves from one side of the screen to the other
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Andy
+ * @version December 2023
  */
 public class Missile extends Actor
 {
-    /**
-     * Act - do whatever the Missile wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
     SimpleTimer animationTimer = new SimpleTimer();
     static GreenfootImage MR = new GreenfootImage("images/rocket.png");      
     GreenfootSound boom = new GreenfootSound("boom.mp3");
@@ -20,7 +16,9 @@ public class Missile extends Actor
     int turn = 1;
     GreenfootImage[] missile = new GreenfootImage[3];
     boolean isSpawned = false;
-    
+    /**
+     * Sets the direction and the animation
+     */
     public Missile(int direction)
     {
         this.direction = direction;
@@ -30,6 +28,9 @@ public class Missile extends Actor
             missile[i].scale(64,50);
         }
     }
+    /**
+     * Spawns it, and then chases the player
+     */
     public void act()
     {
         animate();
@@ -78,7 +79,9 @@ public class Missile extends Actor
         }
         isSpawned = true;
     }
-    
+    /**
+     * Animates the Missile
+     */
     int imageIndex = 0;
     public void animate()
     {

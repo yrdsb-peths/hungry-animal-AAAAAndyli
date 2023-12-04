@@ -1,25 +1,26 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Menu here.
+ * Shows the player the different difficulties it can pick
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @Andy
+ * @version December 2023
  */
 public class Menu extends Actor
 {
-    /**
-     * Act - do whatever the Menu wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    int speed = 0;
+    int speed = 50;
     GreenfootImage menu = new GreenfootImage("images/game_mode_select.png");
+    /**
+     * creates the image
+     */
     public Menu()
     {
-        speed = 50;
         menu.scale(300,300);
         setImage(menu);
     }
+    /**
+    * Moves onto the screen, and out
+    */
     public void act()
     {
         MyWorld world = (MyWorld) getWorld();

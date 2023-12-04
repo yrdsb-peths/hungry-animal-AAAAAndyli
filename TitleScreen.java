@@ -23,6 +23,9 @@ public class TitleScreen extends World
     }
 
     //Main world act loop
+    /**
+     * Waits for user to press enter, changes world when enter is pressed.
+     */
     public void act()
     {
         if(Greenfoot.isKeyDown("enter"))

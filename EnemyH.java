@@ -4,8 +4,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * Simple enemy that spawns randomly, damages player if touching player
  * and moves from one side of the screen to the other
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Andy
+ * @version December 2023
  */
 public class EnemyH extends Actor
 {
@@ -17,11 +17,17 @@ public class EnemyH extends Actor
     GreenfootImage crocL = new GreenfootImage("images/alligator.png"); 
     GreenfootSound bite = new GreenfootSound("bite.mp3");
     private int direction = -1;
+    /**
+     * Sets the direction of the crocodile
+     */
     public EnemyH(int direction)
     {
         crocL.mirrorHorizontally();
         this.direction = direction;
     }
+    /**
+     * Controls the movement and checks if it is touching the elephant
+     */
     public void act()
     {
         MyWorld world = (MyWorld) getWorld();        
