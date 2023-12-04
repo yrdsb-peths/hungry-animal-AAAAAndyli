@@ -100,7 +100,7 @@ public class MyWorld extends World
         {
             pickDifficulty();
         }
-        else if(!eSong.isPlaying()&&!nSong.isPlaying()&&!hSong1.isPlaying()&&!hSong2.isPlaying()&&!xSong.isPlaying())
+        else
         {
             playMusic();
         }
@@ -119,7 +119,7 @@ public class MyWorld extends World
         
         highScoreLabel.setValue(highestScore); 
         
-        if(timer.millisElapsed() > 4000-intervals*50 || isSecret &&timer.millisElapsed() > 1000-intervals*5)
+        if(timer.millisElapsed() > 4000-intervals*50 || isSecret &&timer.millisElapsed() > 1000-intervals*10)
         {            
             spawnEnemies();
         }
@@ -271,28 +271,30 @@ public class MyWorld extends World
      */
     public void playMusic()
     {
-        if(song == 0&&!gameOver)
+        if(!eSong.isPlaying()&&!nSong.isPlaying()&&!hSong1.isPlaying()&&!hSong2.isPlaying()&&!xSong.isPlaying())
         {
-            eSong.playLoop();
+            if(song == 0&&!gameOver)
+            {
+                eSong.playLoop();
+            }
+            else if(song == 1&&!gameOver)
+            {
+                nSong.playLoop();
+            }
+            else if(song == 2&&!gameOver)
+            {
+                hSong1.play();
+                song = 3;
+            }
+            else if(song == 3&&!gameOver)
+            {
+                hSong2.playLoop();
+            }
+            else if(song == 4&&!gameOver)
+            {
+                xSong.playLoop();
+            }
         }
-        else if(song == 1&&!gameOver)
-        {
-            nSong.playLoop();
-        }
-        else if(song == 2&&!gameOver)
-        {
-            hSong1.play();
-            song = 3;
-        }
-        else if(song == 3&&!gameOver)
-        {
-            hSong2.playLoop();
-        }
-        else if(song == 4&&!gameOver)
-        {
-            xSong.playLoop();
-        }
-
     }
     /**
      * Chooses the difficulty of the game
