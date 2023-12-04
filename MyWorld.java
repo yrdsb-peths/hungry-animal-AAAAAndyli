@@ -8,7 +8,14 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class MyWorld extends World
 {
+    /**
+     * The score is the number of health the elephant has that increases or decreases depending
+     * on whether they touch enemies and apples
+     */
     public int score = 0;
+    /**
+     * Highest score in a round.
+     */
     public int highestScore = score;
     Label scoreLabel;
     Label highScoreLabel;
@@ -26,6 +33,9 @@ public class MyWorld extends World
     GreenfootSound hSong2 = new GreenfootSound("HardSong.mp3");
     GreenfootSound xSong = new GreenfootSound("ExtremeSong.mp3");
     
+    /**
+     * gameOver is if the game is over
+     */
     public boolean gameOver = false;
     boolean warningOnScreen = false;
     boolean mwarningOnScreen = false;
@@ -37,7 +47,13 @@ public class MyWorld extends World
     boolean isSecret = false;
     boolean isSecretStarted = false;
     
+    /**
+     * X value of the elephant
+     */
     public int eleX = 0;
+    /**
+     * Y value of the elephant
+     */
     public int eleY = 0;
 
     int song = -1;
@@ -53,11 +69,11 @@ public class MyWorld extends World
     Menu menu = new Menu();
     /**
      * Constructor for objects of class MyWorld.
-     * 
+     * Generates the new world, and prepares the world for gaming.
      */
     public MyWorld()
     {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
+        // Create a new world with 600x400 cells with a cell size of 1x1 pixels
         super(600, 400, 1, false);
         
         addObject(elephant, 300, 300);
@@ -75,79 +91,14 @@ public class MyWorld extends World
         worldTimer.mark();
     }
     
+    /**
+     * Runs the game
+     */
     public void act()
     {
         if(!isGameStarted)
         {
-            if(Greenfoot.isKeyDown("1"))
-            {
-                //easy gm
-                song = 0;
-                apple = true;
-                croc = false;
-                miss = false;
-                isGameStarted = true;
-                createApple();
-            }
-            else if(Greenfoot.isKeyDown("2"))
-            {
-                //normal gm
-                song = 1;
-                apple = true;
-                croc = true;
-                miss = false;
-                isGameStarted = true;
-                createApple();
-            }
-            else if(Greenfoot.isKeyDown("3"))
-            {
-                //hard gm
-                song = 2;
-                apple = true;
-                croc = true;
-                miss = true;
-                isGameStarted = true;
-                createApple();
-            }
-            else if(Greenfoot.isKeyDown("4"))
-            {
-                //missile gm
-                song = 2;
-                apple = false;
-                croc = false;
-                miss = true;
-                isTimer = true;
-                isGameStarted = true;
-                worldTimer.mark();
-            }
-            else if(Greenfoot.isKeyDown("5"))
-            {
-                //enemy gm
-                song = 2;
-                apple = false;
-                croc = true;
-                miss = true;
-                isTimer = true;
-                isGameStarted = true;
-                worldTimer.mark();
-            }
-            else if(Greenfoot.isKeyDown("6"))
-            {
-                //extreme difficulty, Secret
-                score = 99;
-                increaseScore();
-                song = 4;
-                apple = true;
-                croc = true;
-                miss = true;
-                isTimer = true;
-                isGameStarted = true;
-                isSecret = true;
-                worldTimer.mark();
-                setBackground(extremeImage);
-                createApple();
-            }
-            worldTimer.mark();
+            pickDifficulty();
         }
         else if(!eSong.isPlaying()&&!nSong.isPlaying()&&!hSong1.isPlaying()&&!hSong2.isPlaying()&&!xSong.isPlaying())
         {
@@ -178,11 +129,15 @@ public class MyWorld extends World
         }
     }
     
+    /**
+     * Method used to check if the game is over, and if it is, it will display the game being over.
+     */
     public void gameOver()
     {
         scoreLabel.setValue(score);
         if(score < 0)
         {
+            worldTimer.mark();
             scoreLabel.setValue(0);
             gameOverLabel.setValue("Game Over\n<Enter>");
             addObject(gameOverLabel, 300, 200);
@@ -200,6 +155,9 @@ public class MyWorld extends World
             xSong.stop();
         }
     }
+    /**
+     * Restarts the round
+     */
     public void restart()
     {
         isGameStarted = false;
@@ -217,13 +175,17 @@ public class MyWorld extends World
         gameOverLabel.setValue("");
         setBackground(normalImage);
     }
-    
+    /**
+     * Increases the score, and displays the score
+     */
     public void increaseScore()
     {
         score++;
         scoreLabel.setValue(score);
     }
-    
+    /**
+     * Creates an apple if the apple variable is true
+     */
     public void createApple()
     {
         if(apple)
@@ -233,7 +195,9 @@ public class MyWorld extends World
             addObject(apple, x, 0);
         }
     }
-    
+    /**
+     * Creates a warning, and then a crocodile
+     */
     public void createEnemyH()
     {
         Warning warning = new Warning();
@@ -266,6 +230,9 @@ public class MyWorld extends World
             }
         }
     }
+    /**
+     * creates a warning, and then a missile
+     */
     public void createEnemyMH()
     {
         MWarning missilewarning = new MWarning();
@@ -299,6 +266,9 @@ public class MyWorld extends World
             }
         }
     }
+    /**
+     * Plays music
+     */
     public void playMusic()
     {
         if(song == 0&&!gameOver)
@@ -324,6 +294,83 @@ public class MyWorld extends World
         }
 
     }
+    /**
+     * Chooses the difficulty of the game
+     */
+    public void pickDifficulty()
+    {
+        if(Greenfoot.isKeyDown("1"))
+        {
+            //easy gm
+            song = 0;
+            apple = true;
+            croc = false;
+            miss = false;
+            isGameStarted = true;
+            createApple();
+        }
+        else if(Greenfoot.isKeyDown("2"))
+        {
+            //normal gm
+            song = 1;
+            apple = true;
+            croc = true;
+            miss = false;
+            isGameStarted = true;
+            createApple();
+        }
+        else if(Greenfoot.isKeyDown("3"))
+        {
+            //hard gm
+            song = 2;
+            apple = true;
+            croc = true;
+            miss = true;
+            isGameStarted = true;
+            createApple();
+        }
+        else if(Greenfoot.isKeyDown("4"))
+        {
+            //missile gm
+            song = 2;
+            apple = false;
+            croc = false;
+            miss = true;
+            isTimer = true;
+            isGameStarted = true;
+            worldTimer.mark();
+        }
+        else if(Greenfoot.isKeyDown("5"))
+        {
+            //enemy gm
+            song = 2;
+            apple = false;
+            croc = true;
+            miss = true;
+            isTimer = true;
+            isGameStarted = true;
+            worldTimer.mark();
+        }
+        else if(Greenfoot.isKeyDown("6"))
+        {
+            //extreme difficulty, Secret
+            score = 99;
+            increaseScore();
+            song = 4;
+            apple = true;
+            croc = true;
+            miss = true;
+            isTimer = true;
+            isGameStarted = true;
+            isSecret = true;
+            worldTimer.mark();
+            setBackground(extremeImage);
+            createApple();
+        }
+    }
+    /**
+     * Spawns enemies
+     */
     public void spawnEnemies()
     {
         if(timer.millisElapsed() < 21000&&isSecret&&!isSecretStarted)

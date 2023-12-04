@@ -1,5 +1,12 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
+
+/**
+ * The player
+ * 
+ * @author Andy
+ * @version December 2023
+ */
 public class Elephant extends Actor
 {
     int x = 0;
@@ -19,7 +26,9 @@ public class Elephant extends Actor
     
     //direction elephant is facing
     String facing = "right";
-    
+    /**
+     * constructor creates image for animation
+     */
     public Elephant()
     {
         for(int i = 0; i < 8; i++)
@@ -38,7 +47,9 @@ public class Elephant extends Actor
         setImage(idleRight[0]);
     }
     
-    
+    /**
+     * Movement code, responds to keyboard inputs.
+     */
     public void act()
     {
         x = getX();
@@ -107,6 +118,10 @@ public class Elephant extends Actor
         animateElephant();
 
     }
+    /**
+     * If it is touching an apple, destroy the apple
+     * Add one to your score.
+     */
     public void eat()
     {
         if(isTouching(Apple.class))
@@ -118,6 +133,9 @@ public class Elephant extends Actor
             elephantSound.play();
         }
     }
+    /**
+     * Moves the elephant vertically, and controls how high the elephant can jump
+     */
     public void jump()
     {
         if(peakJump == false)
@@ -130,7 +148,9 @@ public class Elephant extends Actor
             peakJump = true;
         }
     }
-    
+    /**
+     * Increases speed for a short amount of time
+     */
     public void dash()
     {
         if(dashable > 100)
@@ -154,6 +174,9 @@ public class Elephant extends Actor
         }
     }
     
+    /**
+     * prevents elephant from moving beyond the screen.
+     */
     public void bounding()
     {
         if(getX()>600)
@@ -170,6 +193,9 @@ public class Elephant extends Actor
     }
     
     int imageIndex = 0;
+    /**
+     * animates the elephant
+     */
     public void animateElephant()
     {
         if(animationTimer.millisElapsed() < 100)
