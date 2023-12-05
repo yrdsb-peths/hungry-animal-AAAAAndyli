@@ -31,6 +31,7 @@ public class EnemyH extends Actor
     public void act()
     {
         MyWorld world = (MyWorld) getWorld();        
+
         if(direction == 0)
         {
             setImage(crocR);

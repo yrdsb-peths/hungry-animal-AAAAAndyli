@@ -33,7 +33,7 @@ public class MyWorld extends World
     GreenfootSound hSong2 = new GreenfootSound("HardSong.mp3");
     GreenfootSound xSong = new GreenfootSound("ExtremeSong.mp3");
     GreenfootSound empty = new GreenfootSound("silence.mp3");
-    
+    GreenfootSound waiting = new GreenfootSound("waitingMusic.mp3");
     /**
      * gameOver is if the game is over
      */
@@ -63,6 +63,7 @@ public class MyWorld extends World
     int mdir = 0;
     int intervals = 0;
     int height = 0;
+    int wVolume = 0;
     
     GreenfootImage normalImage = new GreenfootImage("images/nmode.png");
     GreenfootImage extremeImage = new GreenfootImage("images/emode.png");
@@ -92,11 +93,14 @@ public class MyWorld extends World
         timer.mark();
         worldTimer.mark();
         
+        waiting.playLoop();
+        
         eSong.setVolume(75);
         nSong.setVolume(75);
         hSong1.setVolume(75);
         hSong2.setVolume(75);
         xSong.setVolume(75);
+        waiting.setVolume(0);
     }
     
     /**
@@ -106,16 +110,28 @@ public class MyWorld extends World
     {
         if(!isGameStarted)
         {
-            pickDifficulty();
             worldTimer.mark();
             timer.mark();
             enemyTimer.mark();
             missileTimer.mark();
+            playMusic();
+            stopMusic();
+            pickDifficulty();
+            if(wVolume < 75)
+            {
+                wVolume++;
+            }
+            
         }
         else
         {
             playMusic();
+            if(wVolume > 0)
+            {
+                wVolume--;
+            }
         }
+        waiting.setVolume(wVolume);
 
         eleX = elephant.getX();
         eleY = elephant.getY();
@@ -151,7 +167,6 @@ public class MyWorld extends World
         scoreLabel.setValue(score);
         if(score < 0)
         {
-            song = -1;
             worldTimer.mark();
             scoreLabel.setValue(0);
             gameOverLabel.setValue("Game Over\n<Enter>");
@@ -163,11 +178,8 @@ public class MyWorld extends World
             mwarningOnScreen = false;
             loss.play();
             
-            eSong.stop();
-            nSong.stop();
-            hSong1.stop();
-            hSong2.stop();
-            xSong.stop();
+            stopMusic();
+            song = -1;
         }
     }
     /**
@@ -233,6 +245,7 @@ public class MyWorld extends World
             warningOnScreen = true;
             if(enemyTimer.millisElapsed() > 1000-highestScore*enemyTimer.millisElapsed()/10)
             {
+
                 warningOnScreen = false;
                 addObject(croc, 0, 330);
                 enemyTimer.mark();
@@ -291,17 +304,16 @@ public class MyWorld extends World
      */
     public void playMusic()
     {    
-        
         if(!isSongPlaying)
         {
             empty.play();
             if(song == 0)
             {
-                eSong.playLoop();
+                eSong.play();
             }
             else if(song == 1)
             {
-                nSong.playLoop();
+                nSong.play();
             }
             else if(song == 2)
             {
@@ -310,13 +322,21 @@ public class MyWorld extends World
             }
             else if(song == 3)
             {
-                hSong2.playLoop();
+                hSong2.play();
             }
             else if(song == 4)
             {
-                xSong.playLoop();
+                xSong.play();
             }
         }
+    }
+    public void stopMusic()
+    {
+        eSong.stop();
+        nSong.stop();
+        hSong1.stop();
+        hSong2.stop();
+        xSong.stop();
     }
     /**
      * Chooses the difficulty of the game
@@ -397,7 +417,7 @@ public class MyWorld extends World
      */
     public void spawnEnemies()
     {
-        if(timer.millisElapsed() < 21000&&isSecret&&!isSecretStarted)
+        if(timer.millisElapsed() < 21000&&isSecret&&!isSecretStarted||hSong1.isPlaying())
         {
             return;
         }
