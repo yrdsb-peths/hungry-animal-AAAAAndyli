@@ -32,6 +32,7 @@ public class MyWorld extends World
     GreenfootSound hSong1 = new GreenfootSound("HardSongIntro.mp3");
     GreenfootSound hSong2 = new GreenfootSound("HardSong.mp3");
     GreenfootSound xSong = new GreenfootSound("ExtremeSong.mp3");
+    GreenfootSound empty = new GreenfootSound("silence.mp3");
     
     /**
      * gameOver is if the game is over
@@ -90,6 +91,12 @@ public class MyWorld extends World
         missileTimer.mark();
         timer.mark();
         worldTimer.mark();
+        
+        eSong.setVolume(75);
+        nSong.setVolume(75);
+        hSong1.setVolume(75);
+        hSong2.setVolume(75);
+        xSong.setVolume(75);
     }
     
     /**
@@ -124,6 +131,7 @@ public class MyWorld extends World
         
         highScoreLabel.setValue(highestScore); 
         isSongPlaying = eSong.isPlaying() || nSong.isPlaying() || hSong1.isPlaying() || hSong2.isPlaying() || xSong.isPlaying();
+        System.out.println(isSongPlaying);
         
         if(timer.millisElapsed() > 4000-intervals*50 || isSecret &&timer.millisElapsed() > 1000-intervals*5)
         {            
@@ -283,15 +291,17 @@ public class MyWorld extends World
      */
     public void playMusic()
     {    
+        
         if(!isSongPlaying)
         {
+            empty.play();
             if(song == 0)
             {
-                eSong.play();
+                eSong.playLoop();
             }
             else if(song == 1)
             {
-                nSong.play();
+                nSong.playLoop();
             }
             else if(song == 2)
             {
@@ -300,11 +310,11 @@ public class MyWorld extends World
             }
             else if(song == 3)
             {
-                hSong2.play();
+                hSong2.playLoop();
             }
             else if(song == 4)
             {
-                xSong.play();
+                xSong.playLoop();
             }
         }
     }
