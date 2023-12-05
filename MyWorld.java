@@ -85,7 +85,7 @@ public class MyWorld extends World
         
         highScoreLabel = new Label(0,40);
         addObject(highScoreLabel, 50, 80);
-        
+        Greenfoot.setSpeed(51);
         enemyTimer.mark();
         missileTimer.mark();
         timer.mark();
@@ -100,6 +100,10 @@ public class MyWorld extends World
         if(!isGameStarted)
         {
             pickDifficulty();
+            worldTimer.mark();
+            timer.mark();
+            enemyTimer.mark();
+            missileTimer.mark();
         }
         else
         {
