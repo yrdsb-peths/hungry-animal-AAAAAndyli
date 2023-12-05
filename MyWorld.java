@@ -417,7 +417,7 @@ public class MyWorld extends World
      */
     public void spawnEnemies()
     {
-        if(timer.millisElapsed() < 21000&&isSecret&&!isSecretStarted)
+        if(timer.millisElapsed() < 21000&&isSecret&&!isSecretStarted||hSong1.isPlaying())
         {
             return;
         }
