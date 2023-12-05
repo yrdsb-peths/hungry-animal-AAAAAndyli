@@ -106,11 +106,13 @@ public class MyWorld extends World
     {
         if(!isGameStarted)
         {
-            pickDifficulty();
             worldTimer.mark();
             timer.mark();
             enemyTimer.mark();
             missileTimer.mark();
+            playMusic();
+            stopMusic();
+            pickDifficulty();
         }
         else
         {
@@ -163,11 +165,7 @@ public class MyWorld extends World
             mwarningOnScreen = false;
             loss.play();
             
-            eSong.stop();
-            nSong.stop();
-            hSong1.stop();
-            hSong2.stop();
-            xSong.stop();
+            stopMusic();
         }
     }
     /**
@@ -317,6 +315,14 @@ public class MyWorld extends World
                 xSong.playLoop();
             }
         }
+    }
+    public void stopMusic()
+    {
+        eSong.stop();
+        nSong.stop();
+        hSong1.stop();
+        hSong2.stop();
+        xSong.stop();
     }
     /**
      * Chooses the difficulty of the game
