@@ -39,6 +39,7 @@ public class MyWorld extends World
     public boolean gameOver = false;
     boolean warningOnScreen = false;
     boolean mwarningOnScreen = false;
+    boolean isSongPlaying = false;
     boolean croc = false;
     boolean miss = false;
     boolean apple = false;
@@ -46,7 +47,6 @@ public class MyWorld extends World
     boolean isTimer = false;
     boolean isSecret = false;
     boolean isSecretStarted = false;
-    boolean firstMilli = false;
     
     /**
      * X value of the elephant
@@ -119,6 +119,7 @@ public class MyWorld extends World
         }
         
         highScoreLabel.setValue(highestScore); 
+        isSongPlaying = eSong.isPlaying() || nSong.isPlaying() || hSong1.isPlaying() || hSong2.isPlaying() || xSong.isPlaying();
         
         if(timer.millisElapsed() > 4000-intervals*50 || isSecret &&timer.millisElapsed() > 1000-intervals*5)
         {            
@@ -138,6 +139,7 @@ public class MyWorld extends World
         scoreLabel.setValue(score);
         if(score < 0)
         {
+            song = -1;
             worldTimer.mark();
             scoreLabel.setValue(0);
             gameOverLabel.setValue("Game Over\n<Enter>");
@@ -161,11 +163,16 @@ public class MyWorld extends World
      */
     public void restart()
     {
-        isGameStarted = false;
         gameOver = false;
-        isSecretStarted = false;
-        isSecret = false;
+        warningOnScreen = false;
+        mwarningOnScreen = false;
+        croc = false;
+        miss = false;
+        apple = false;
+        isGameStarted = false;
         isTimer = false;
+        isSecret = false;
+        isSecretStarted = false;
         worldTimer.mark();
         timer.mark();
         enemyTimer.mark();
@@ -271,39 +278,30 @@ public class MyWorld extends World
      * Plays music
      */
     public void playMusic()
-    {
-        if(firstMilli)
+    {    
+        if(!isSongPlaying)
         {
-            eSong.stop();
-            nSong.stop();
-            hSong1.stop();
-            hSong2.stop();
-            xSong.stop();
-        }
-        if(!eSong.isPlaying()&&!eSong.isPlaying()&&!nSong.isPlaying()&&!hSong1.isPlaying()&&!hSong2.isPlaying()&&!xSong.isPlaying())
-        {
-            if(song == 0&&!gameOver)
+            if(song == 0)
             {
                 eSong.play();
             }
-            else if(song == 1&&!gameOver)
+            else if(song == 1)
             {
                 nSong.play();
             }
-            else if(song == 2&&!gameOver)
+            else if(song == 2)
             {
                 hSong1.play();
                 song = 3;
             }
-            else if(song == 3&&!gameOver)
+            else if(song == 3)
             {
                 hSong2.play();
             }
-            else if(song == 4&&!gameOver)
+            else if(song == 4)
             {
                 xSong.play();
             }
-            firstMilli = false;
         }
     }
     /**
@@ -320,7 +318,6 @@ public class MyWorld extends World
             miss = false;
             isGameStarted = true;
             createApple();
-            firstMilli = true;
         }
         else if(Greenfoot.isKeyDown("2"))
         {
@@ -331,7 +328,6 @@ public class MyWorld extends World
             miss = false;
             isGameStarted = true;
             createApple();
-            firstMilli = true;
         }
         else if(Greenfoot.isKeyDown("3"))
         {
@@ -342,7 +338,6 @@ public class MyWorld extends World
             miss = true;
             isGameStarted = true;
             createApple();
-            firstMilli = true;
         }
         else if(Greenfoot.isKeyDown("4"))
         {
@@ -354,7 +349,6 @@ public class MyWorld extends World
             isTimer = true;
             isGameStarted = true;
             worldTimer.mark();
-            firstMilli = true;
         }
         else if(Greenfoot.isKeyDown("5"))
         {
@@ -366,7 +360,6 @@ public class MyWorld extends World
             isTimer = true;
             isGameStarted = true;
             worldTimer.mark();
-            firstMilli = true;
         }
         else if(Greenfoot.isKeyDown("6"))
         {
@@ -383,7 +376,6 @@ public class MyWorld extends World
             worldTimer.mark();
             setBackground(extremeImage);
             createApple();
-            firstMilli = true;
         }
     }
     /**
