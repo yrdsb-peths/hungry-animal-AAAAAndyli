@@ -316,13 +316,13 @@ public class Elephant extends Actor
             }
             if(y>200&&peakJump)
             {
-                if(Greenfoot.isKeyDown("left"))
+                if(facing.equals("right"))
                 {
-                    setImage(landLeft[landingIndex]);
+                    setImage(landRight[landingIndex]);
                 }
                 else
                 {
-                    setImage(landRight[landingIndex]);
+                    setImage(landLeft[landingIndex]);
                 }            
                 landingIndex = (landingIndex + 1) % landLeft.length;  
             }
