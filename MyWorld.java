@@ -147,7 +147,6 @@ public class MyWorld extends World
         
         highScoreLabel.setValue(highestScore); 
         isSongPlaying = eSong.isPlaying() || nSong.isPlaying() || hSong1.isPlaying() || hSong2.isPlaying() || xSong.isPlaying();
-        System.out.println(isSongPlaying);
         
         if(timer.millisElapsed() > 4000-intervals*50 || isSecret &&timer.millisElapsed() > 1000-intervals*5)
         {            
