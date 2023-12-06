@@ -305,7 +305,6 @@ public class MyWorld extends World
     {    
         if(!isSongPlaying)
         {
-            empty.play();
             if(song == 0)
             {
                 eSong.play();
@@ -325,7 +324,8 @@ public class MyWorld extends World
             }
             else if(song == 4)
             {
-                xSong.play();
+                empty.play();
+                xSong.playLoop();
             }
         }
     }
