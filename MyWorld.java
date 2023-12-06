@@ -63,6 +63,7 @@ public class MyWorld extends World
     int mdir = 0;
     int intervals = 0;
     int height = 0;
+    int volume = 75;
     int wVolume = 0;
     
     GreenfootImage normalImage = new GreenfootImage("images/nmode.png");
@@ -94,12 +95,6 @@ public class MyWorld extends World
         worldTimer.mark();
         
         waiting.playLoop();
-        
-        eSong.setVolume(75);
-        nSong.setVolume(75);
-        hSong1.setVolume(75);
-        hSong2.setVolume(75);
-        xSong.setVolume(75);
         waiting.setVolume(0);
     }
     
@@ -108,6 +103,11 @@ public class MyWorld extends World
      */
     public void act()
     {
+        eSong.setVolume(volume);
+        nSong.setVolume(volume);
+        hSong1.setVolume(volume);
+        hSong2.setVolume(volume);
+        xSong.setVolume(volume);
         if(!isGameStarted)
         {
             worldTimer.mark();
@@ -117,9 +117,13 @@ public class MyWorld extends World
             playMusic();
             stopMusic();
             pickDifficulty();
-            if(wVolume < 75)
+            if(wVolume < volume)
             {
                 wVolume++;
+            }
+            else if(wVolume > volume)
+            {
+                wVolume--;
             }
             
         }
@@ -131,6 +135,16 @@ public class MyWorld extends World
                 wVolume--;
             }
         }
+        
+        if((Greenfoot.isKeyDown("=")||Greenfoot.isKeyDown("+"))&&volume < 100)
+        {
+            volume++;
+        }
+        if(Greenfoot.isKeyDown("_")||Greenfoot.isKeyDown("-")&& volume > 0)
+        {
+            volume--;
+        }
+        
         waiting.setVolume(wVolume);
 
         eleX = elephant.getX();
