@@ -15,12 +15,24 @@ public class Elephant extends Actor
     int jumpHeight = 0;
     double gravityModifier = 0;
     int dashable = 0;
+    int jumpIndex = 0;
+    int fallIndex = 0; 
+    int landingIndex = 0;
     boolean isGrounded = true;
     boolean peakJump = false;
     
     GreenfootSound elephantSound = new GreenfootSound("elephantcub.mp3");
     GreenfootImage[] idleRight = new GreenfootImage[8];
     GreenfootImage[] idleLeft = new GreenfootImage[8];
+    GreenfootImage[] walkRight = new GreenfootImage[8];
+    GreenfootImage[] walkLeft = new GreenfootImage[8];
+    GreenfootImage[] jumpRight = new GreenfootImage[2];
+    GreenfootImage[] jumpLeft = new GreenfootImage[2];
+    GreenfootImage[] fallRight = new GreenfootImage[2];
+    GreenfootImage[] fallLeft = new GreenfootImage[2];
+    GreenfootImage[] landRight = new GreenfootImage[5];
+    GreenfootImage[] landLeft = new GreenfootImage[5];
+    
     
     SimpleTimer animationTimer = new SimpleTimer();
     
@@ -34,15 +46,52 @@ public class Elephant extends Actor
         for(int i = 0; i < 8; i++)
         {
             idleRight[i] = new GreenfootImage("images/elephant_idle/idle" + i + ".png");
+            walkRight[i] = new GreenfootImage("images/elephant_walk/tile00" + i + ".png");
             idleRight[i].scale(75,75);
+            walkRight[i].scale(75,75);
         }
         for(int i = 0; i < 8; i++)
         {
             idleLeft[i] = new GreenfootImage("images/elephant_idle/idle" + i + ".png");
+            walkLeft[i] = new GreenfootImage("images/elephant_walk/tile00" + i + ".png");
             idleLeft[i].mirrorHorizontally();
+            walkLeft[i].mirrorHorizontally();
             idleLeft[i].scale(75,75);
+            walkLeft[i].scale(75,75);
         }
-        
+        for(int i = 0; i < 2; i++)
+        {
+            jumpRight[i] = new GreenfootImage("images/elephant_jump/tile00" + (i+1) + ".png");
+            jumpRight[i].scale(75,75);
+        }
+        for(int i = 0; i < 2; i++)
+        {
+            jumpLeft[i] = new GreenfootImage("images/elephant_jump/tile00" + (i+1) + ".png");
+            jumpLeft[i].mirrorHorizontally();
+            jumpLeft[i].scale(75,75);
+        }
+        for(int i = 2; i < 4; i++)
+        {
+            fallRight[i-2] = new GreenfootImage("images/elephant_jump/fall/tile00" + (i+1) + ".png");
+            fallRight[i-2].scale(75,75);
+        }
+        for(int i = 2; i < 4; i++)
+        {
+            fallLeft[i-2] = new GreenfootImage("images/elephant_jump/fall/tile00" + (i+1) + ".png");
+            fallLeft[i-2].mirrorHorizontally();
+            fallLeft[i-2].scale(75,75);
+        }
+        for(int i = 4; i < 9; i++)
+        {
+            landRight[i-4] = new GreenfootImage("images/elephant_jump/fall/landing/tile00" + (i+1) + ".png");
+            landRight[i-4].scale(75,75);
+        }
+        for(int i = 4; i < 9; i++)
+        {
+            landLeft[i-4] = new GreenfootImage("images/elephant_jump/fall/landing/tile00" + (i+1) + ".png");
+            landLeft[i-4].mirrorHorizontally();
+            landLeft[i-4].scale(75,75);
+        }
         animationTimer.mark();
         setImage(idleRight[0]);
     }
@@ -93,7 +142,6 @@ public class Elephant extends Actor
             if(peakJump)
             {
                 jumpHeight = 0;
-                peakJump = true;
                 jumpHeight += gravityModifier;
             }
         }
@@ -115,7 +163,15 @@ public class Elephant extends Actor
         }
         eat();
         dashable++;
-        animateElephant();
+        if(isGrounded)
+        {
+            jumpIndex = 0;
+            animateElephant();
+        }
+        else
+        {
+            animateJump();  
+        }
 
     }
     /**
@@ -203,15 +259,93 @@ public class Elephant extends Actor
             return;
         }
         animationTimer.mark();
-        if(facing.equals("right"))
+        if(y == 300)
         {
-            setImage(idleRight[imageIndex]);
-            imageIndex = (imageIndex + 1) % idleRight.length;
+            if(facing.equals("right"))
+            {
+                if(Greenfoot.isKeyDown("right"))
+                {
+                    setImage(walkRight[imageIndex]);
+                }
+                else
+                {
+                    setImage(idleRight[imageIndex]);
+                }            
+                imageIndex = (imageIndex + 1) % idleRight.length;
+            }
+            else
+            {
+                if(Greenfoot.isKeyDown("left"))
+                {
+                    setImage(walkLeft[imageIndex]);
+                }
+                else
+                {
+                    setImage(idleLeft[imageIndex]);
+                }            
+                imageIndex = (imageIndex + 1) % idleLeft.length;        
+            }
         }
-        else
+    }
+    public void animateJump()
+    {
+        if(animationTimer.millisElapsed() < 100)
         {
-            setImage(idleLeft[imageIndex]);
-            imageIndex = (imageIndex + 1) % idleLeft.length;
+            return;
+        }
+        animationTimer.mark();
+        if(!isGrounded)
+        {
+            if(facing.equals("right"))
+            {
+                setImage(jumpRight[jumpIndex]);
+                if(jumpIndex < 0)
+                {
+                    jumpIndex++;
+                }
+                fallIndex = 0;
+            }
+            else
+            {
+                setImage(jumpLeft[jumpIndex]);
+                if(jumpIndex < 0)
+                {
+                    jumpIndex++;
+                }
+                fallIndex = 0;
+            }
+            if(y>200&&peakJump)
+            {
+                if(Greenfoot.isKeyDown("left"))
+                {
+                    setImage(landLeft[landingIndex]);
+                }
+                else
+                {
+                    setImage(landRight[landingIndex]);
+                }            
+                landingIndex = (landingIndex + 1) % landLeft.length;  
+            }
+            else if(peakJump)
+            {
+                if(facing.equals("right"))
+                {
+                    setImage(fallRight[fallIndex]);
+                    if(fallIndex < 0)
+                    {
+                        jumpIndex++;
+                    }
+                }
+                else
+                {
+                    setImage(fallLeft[jumpIndex]);
+                    if(fallIndex < 0)
+                    {
+                        jumpIndex++;
+                    }
+                }
+                landingIndex = 0;
+            }
         }
     }
 }
