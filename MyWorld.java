@@ -147,7 +147,6 @@ public class MyWorld extends World
         
         highScoreLabel.setValue(highestScore); 
         isSongPlaying = eSong.isPlaying() || nSong.isPlaying() || hSong1.isPlaying() || hSong2.isPlaying() || xSong.isPlaying();
-        System.out.println(isSongPlaying);
         
         if(timer.millisElapsed() > 4000-intervals*50 || isSecret &&timer.millisElapsed() > 1000-intervals*5)
         {            
@@ -306,7 +305,6 @@ public class MyWorld extends World
     {    
         if(!isSongPlaying)
         {
-            empty.play();
             if(song == 0)
             {
                 eSong.play();
@@ -326,7 +324,8 @@ public class MyWorld extends World
             }
             else if(song == 4)
             {
-                xSong.play();
+                empty.play();
+                xSong.playLoop();
             }
         }
     }
