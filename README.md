@@ -13,6 +13,8 @@ Dodge Crocodiles and Missiles.
 
 Keep your score above 0.
 
+Press + or - to control the music volume
+
 ## Difficulty:
 
 Easy - You only need to catch apples.
