@@ -62,35 +62,35 @@ public class Elephant extends Actor
         for(int i = 0; i < 2; i++)
         {
             jumpRight[i] = new GreenfootImage("images/elephant_jump/tile00" + (i+1) + ".png");
-            jumpRight[i].scale(75,75);
+            jumpRight[i].scale(80,80);
         }
         for(int i = 0; i < 2; i++)
         {
             jumpLeft[i] = new GreenfootImage("images/elephant_jump/tile00" + (i+1) + ".png");
             jumpLeft[i].mirrorHorizontally();
-            jumpLeft[i].scale(75,75);
+            jumpLeft[i].scale(80,80);
         }
         for(int i = 2; i < 4; i++)
         {
             fallRight[i-2] = new GreenfootImage("images/elephant_jump/fall/tile00" + (i+1) + ".png");
-            fallRight[i-2].scale(75,75);
+            fallRight[i-2].scale(80,80);
         }
         for(int i = 2; i < 4; i++)
         {
             fallLeft[i-2] = new GreenfootImage("images/elephant_jump/fall/tile00" + (i+1) + ".png");
             fallLeft[i-2].mirrorHorizontally();
-            fallLeft[i-2].scale(75,75);
+            fallLeft[i-2].scale(80,80);
         }
         for(int i = 4; i < 9; i++)
         {
             landRight[i-4] = new GreenfootImage("images/elephant_jump/fall/landing/tile00" + (i+1) + ".png");
-            landRight[i-4].scale(75,75);
+            landRight[i-4].scale(80,80);
         }
         for(int i = 4; i < 9; i++)
         {
             landLeft[i-4] = new GreenfootImage("images/elephant_jump/fall/landing/tile00" + (i+1) + ".png");
             landLeft[i-4].mirrorHorizontally();
-            landLeft[i-4].scale(75,75);
+            landLeft[i-4].scale(80,80);
         }
         animationTimer.mark();
         setImage(idleRight[0]);
