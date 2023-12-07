@@ -31,10 +31,6 @@ public class Menu extends Actor
         else if(world.isGameStarted)
         {
             move((speed - ((getX()-200)/10)));
-            if(getX() < 0)
-            {
-                world.removeObject(this);
-            }
         }
     }
 }
