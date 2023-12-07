@@ -103,11 +103,13 @@ public class MyWorld extends World
      */
     public void act()
     {
+        //sets volume
         eSong.setVolume(volume);
         nSong.setVolume(volume);
         hSong1.setVolume(volume);
         hSong2.setVolume(volume);
         xSong.setVolume(volume);
+        waiting.setVolume(wVolume);
         if(!isGameStarted)
         {
             worldTimer.mark();
@@ -125,7 +127,6 @@ public class MyWorld extends World
             {
                 wVolume--;
             }
-            
         }
         else
         {
@@ -135,7 +136,7 @@ public class MyWorld extends World
                 wVolume--;
             }
         }
-        
+        //changes Volume
         if((Greenfoot.isKeyDown("=")||Greenfoot.isKeyDown("+"))&&volume < 100)
         {
             volume++;
@@ -144,11 +145,12 @@ public class MyWorld extends World
         {
             volume--;
         }
-        
-        waiting.setVolume(wVolume);
 
         eleX = elephant.getX();
         eleY = elephant.getY();
+        
+        highScoreLabel.setValue(highestScore); 
+        isSongPlaying = eSong.isPlaying() || nSong.isPlaying() || hSong1.isPlaying() || hSong2.isPlaying() || xSong.isPlaying();
         
         if(isTimer&&!gameOver)
         {
@@ -158,9 +160,6 @@ public class MyWorld extends World
         {
             highestScore = score;
         }
-        
-        highScoreLabel.setValue(highestScore); 
-        isSongPlaying = eSong.isPlaying() || nSong.isPlaying() || hSong1.isPlaying() || hSong2.isPlaying() || xSong.isPlaying();
         
         if(timer.millisElapsed() > 4000-intervals*50 || isSecret &&timer.millisElapsed() > 1000-intervals*5)
         {            
@@ -200,6 +199,7 @@ public class MyWorld extends World
      */
     public void restart()
     {
+        //resets all the boolean statements, and other variables
         gameOver = false;
         warningOnScreen = false;
         mwarningOnScreen = false;
@@ -338,6 +338,9 @@ public class MyWorld extends World
             }
             else if(song == 4)
             {
+                /*Please do not deduct marks for this absolute travesty, 
+                 * I couldn't find any other way to fix the issue
+                 */
                 empty.play();
                 xSong.playLoop();
                 stopMusic();

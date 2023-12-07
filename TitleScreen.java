@@ -18,7 +18,7 @@ public class TitleScreen extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1); 
 
-        addObject(titleLabel, getWidth()/2, 50);
+        addObject(titleLabel, getWidth()/2, 75);
         prepare();
     }
 
@@ -51,6 +51,6 @@ public class TitleScreen extends World
         Label label4 = new Label("Use Space to dash", 30);
         addObject(label4,getWidth()/2,230);
         Label label3 = new Label("Press <enter> to start", 40);
-        addObject(label3,getWidth()/2,373);
+        addObject(label3,getWidth()/2,350);
     }
 }
