@@ -326,6 +326,8 @@ public class MyWorld extends World
             {
                 empty.play();
                 xSong.playLoop();
+                stopMusic();
+                xSong.playLoop();
             }
         }
     }
