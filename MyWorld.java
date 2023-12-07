@@ -338,14 +338,11 @@ public class MyWorld extends World
             }
             else if(song == 4)
             {
-                /*Please do not deduct marks for this absolute travesty, 
-                 * I couldn't find any other way to fix the issue
+                /* 
+                 * Song sometimes won't play, it is, to my knowledge, impossible to fix
+                 * the audio bug.
                  */
                 empty.play();
-                xSong.playLoop();
-                stopMusic();
-                xSong.playLoop();
-                stopMusic();
                 xSong.playLoop();
             }
         }

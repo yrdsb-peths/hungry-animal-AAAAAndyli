@@ -130,6 +130,7 @@ public class Elephant extends Actor
         {
             dash();
         }
+        bounding();
         setLocation(x+(int)hMovement, y+jumpHeight);
         if(y< 300)
         {
@@ -161,7 +162,6 @@ public class Elephant extends Actor
             hMovement--;
         }
         eat();
-        bounding();
         dashable++;
         if(isGrounded)
         {
